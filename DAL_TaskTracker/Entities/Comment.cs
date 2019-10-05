@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace BL_TaskTracker.Models
+namespace DAL_TaskTracker.Entities
 {
     public class Comment
     {
@@ -12,6 +8,6 @@ namespace BL_TaskTracker.Models
         public int StatusId { get; set; }
         public string Message { get; set; }
 
-        public virtual List<Comment> Comments { get; set; }
+        public virtual List<Status> StatusReports { get; set; }
     }
 }
