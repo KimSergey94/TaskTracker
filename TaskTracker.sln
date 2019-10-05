@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskTracker", "TaskTracker\TaskTracker.csproj", "{43C62CA4-EB02-437B-8893-45D5DE3B8BC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web_TaskTracker", "TaskTracker\Web_TaskTracker.csproj", "{43C62CA4-EB02-437B-8893-45D5DE3B8BC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL_TaskTracker", "BL_TaskTracker\BLL_TaskTracker.csproj", "{6558CDFC-52CB-4516-B825-89757E648AC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL_TaskTracker", "DAL_TaskTracker\DAL_TaskTracker.csproj", "{44A3DC99-42EA-4BD8-8683-5244E09480F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{43C62CA4-EB02-437B-8893-45D5DE3B8BC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43C62CA4-EB02-437B-8893-45D5DE3B8BC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43C62CA4-EB02-437B-8893-45D5DE3B8BC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6558CDFC-52CB-4516-B825-89757E648AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6558CDFC-52CB-4516-B825-89757E648AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6558CDFC-52CB-4516-B825-89757E648AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6558CDFC-52CB-4516-B825-89757E648AC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44A3DC99-42EA-4BD8-8683-5244E09480F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44A3DC99-42EA-4BD8-8683-5244E09480F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44A3DC99-42EA-4BD8-8683-5244E09480F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44A3DC99-42EA-4BD8-8683-5244E09480F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
