@@ -1,14 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DAL_TaskTracker.Entities
+namespace TaskTracker.Models
 {
-    public class User
+    public class UserVM
     {
-        public int UserId { get; set; }
+        public int UserVMId { get; set; }
         [DataType(DataType.EmailAddress)]
         [Required]
         public string Email { get; set; }
         public string Password { get; set; }
+
+
+        //public virtual List<Admin> Admins { get; set; }
 
     }
 }

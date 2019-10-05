@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DAL_TaskTracker.Entities
+namespace BLL_TaskTracker.DTO
 {
-    public class User
+    public class AdminDTO
     {
-        public int UserId { get; set; }
+        public int AdminId { get; set; }
+        public string Password { get; set; }
+
         [DataType(DataType.EmailAddress)]
         [Required]
         public string Email { get; set; }
-        public string Password { get; set; }
-
     }
 }

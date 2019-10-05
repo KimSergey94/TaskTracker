@@ -1,10 +1,5 @@
 ﻿using DAL_TaskTracker.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Task = DAL_TaskTracker.Entities.Task;
 
 namespace DAL_TaskTracker.Repositories.Interfaces
 {

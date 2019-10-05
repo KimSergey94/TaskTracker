@@ -1,7 +1,6 @@
 ﻿using DAL_TaskTracker.Entities;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using Task = DAL_TaskTracker.Entities.Task;
 
 namespace DAL_TaskTracker.EF
