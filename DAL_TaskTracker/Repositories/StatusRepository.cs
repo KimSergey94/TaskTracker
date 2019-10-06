@@ -29,7 +29,7 @@ namespace DAL_TaskTracker.Repositories
                 db.StatusReports.Remove(item);
         }
 
-        public IEnumerable<Status> Find(Func<Status, bool> predicate)
+        public List<Status> Find(Func<Status, bool> predicate)
         {
             return db.StatusReports.Where(predicate).ToList();
         }
@@ -39,9 +39,9 @@ namespace DAL_TaskTracker.Repositories
             return db.StatusReports.Find(id);
         }
 
-        public IEnumerable<Status> GetAll()
+        public List<Status> GetAll()
         {
-            return db.StatusReports;
+            return db.StatusReports.ToList();
         }
 
         public void Update(Status item)

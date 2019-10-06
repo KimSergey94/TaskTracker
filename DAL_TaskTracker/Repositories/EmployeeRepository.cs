@@ -28,7 +28,7 @@ namespace DAL_TaskTracker.Repositories
                 db.Employees.Remove(item);
         }
 
-        public IEnumerable<Employee> Find(Func<Employee, bool> predicate)
+        public List<Employee> Find(Func<Employee, bool> predicate)
         {
             return db.Employees.Where(predicate).ToList();
         }
@@ -38,9 +38,9 @@ namespace DAL_TaskTracker.Repositories
             return db.Employees.Find(id);
         }
 
-        public IEnumerable<Employee> GetAll()
+        public List<Employee> GetAll()
         {
-            return db.Employees;
+            return db.Employees.ToList();
         }
 
         public void Update(Employee item)

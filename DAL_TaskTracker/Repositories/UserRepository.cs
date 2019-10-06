@@ -27,7 +27,7 @@ namespace DAL_TaskTracker.Repositories.Interfaces
                 db.Users.Remove(item);
         }
 
-        public IEnumerable<User> Find(Func<User, bool> predicate)
+        public List<User> Find(Func<User, bool> predicate)
         {
             return db.Users.Where(predicate).ToList();
         }
@@ -37,9 +37,9 @@ namespace DAL_TaskTracker.Repositories.Interfaces
             return db.Users.Find(id);
         }
 
-        public IEnumerable<User> GetAll()
+        public List<User> GetAll()
         {
-            return db.Users;
+            return db.Users.ToList();
         }
 
         public void Update(User item)

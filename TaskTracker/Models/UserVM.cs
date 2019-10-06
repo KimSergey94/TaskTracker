@@ -4,7 +4,7 @@ namespace TaskTracker.Models
 {
     public class UserVM
     {
-        public int UserVMId { get; set; }
+        public int UserId { get; set; }
         [DataType(DataType.EmailAddress)]
         [Required]
         public string Email { get; set; }

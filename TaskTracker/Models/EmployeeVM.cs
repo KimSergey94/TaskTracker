@@ -4,7 +4,7 @@ namespace TaskTracker.Models
 {
     public class EmployeeVM
     {
-        public int EmployeeVMId { get; set; }
+        public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Country { get; set; }

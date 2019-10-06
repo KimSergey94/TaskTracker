@@ -4,7 +4,7 @@ namespace TaskTracker.Models
 {
     public class CommentVM
     {
-        public int CommentVMId { get; set; }
+        public int CommentId { get; set; }
         public int StatusId { get; set; }
         public string Message { get; set; }
 

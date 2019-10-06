@@ -1,4 +1,5 @@
-﻿using DAL_TaskTracker.Entities;
+﻿using BLL_TaskTracker.DTO;
+using DAL_TaskTracker.Entities;
 using System.Collections.Generic;
 using Task = DAL_TaskTracker.Entities.Task;
 
@@ -6,17 +7,18 @@ namespace BL_TaskTracker.Interfaces
 {
     public interface ITaskService
     {
-        //void MakeOrder(OrderDTO orderDto);
-        List<User> GetUsers();
-        List<Admin> GetAdmins();
-        List<Client> GetClients();
+        //void CreateTask(TaskDTO taskDTO);
 
-        List<Employee> GetEmployees();
-        List<Manager> GetManagers();
+        List<UserDTO> GetUsers();//
+        List<AdminDTO> GetAdmins();//
+        List<ClientDTO> GetClients();//
 
-        List<Task> GetTasks();
-        List<Status> GetStatusReports();
-        List<Comment> GetComments();
+        List<EmployeeDTO> GetEmployees();//
+        List<ManagerDTO> GetManagers();//
+
+        List<TaskDTO> GetTasks();//
+        List<StatusDTO> GetStatusReports();
+        List<CommentDTO> GetComments();
         void Dispose();
     }
 }

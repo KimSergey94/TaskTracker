@@ -28,7 +28,7 @@ namespace DAL_TaskTracker.Repositories
                 db.Managers.Remove(item);
         }
 
-        public IEnumerable<Manager> Find(Func<Manager, bool> predicate)
+        public List<Manager> Find(Func<Manager, bool> predicate)
         {
             return db.Managers.Where(predicate).ToList();
         }
@@ -38,9 +38,9 @@ namespace DAL_TaskTracker.Repositories
             return db.Managers.Find(id);
         }
 
-        public IEnumerable<Manager> GetAll()
+        public List<Manager> GetAll()
         {
-            return db.Managers;
+            return db.Managers.ToList();
         }
 
         public void Update(Manager item)

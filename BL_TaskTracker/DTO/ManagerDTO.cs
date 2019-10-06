@@ -2,7 +2,7 @@
 
 namespace BLL_TaskTracker.DTO
 {
-    public class ManagerViewModel : EmployeeDTO
+    public class ManagerDTO : EmployeeDTO
     {
         public int ManagerId { get; set; }
         public int EmployeeId { get; set; }

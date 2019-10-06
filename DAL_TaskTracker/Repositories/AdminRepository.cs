@@ -28,7 +28,7 @@ namespace DAL_TaskTracker.Repositories
                 db.Admins.Remove(item);
         }
 
-        public IEnumerable<Admin> Find(Func<Admin, bool> predicate)
+        public List<Admin> Find(Func<Admin, bool> predicate)
         {
             return db.Admins.Where(predicate).ToList();
         }
@@ -38,9 +38,9 @@ namespace DAL_TaskTracker.Repositories
             return db.Admins.Find(id);
         }
 
-        public IEnumerable<Admin> GetAll()
+        public List<Admin> GetAll()
         {
-            return db.Admins;
+            return db.Admins.ToList();
         }
 
         public void Update(Admin item)

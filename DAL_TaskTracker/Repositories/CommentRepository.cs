@@ -29,7 +29,7 @@ namespace DAL_TaskTracker.Repositories
                 db.Comments.Remove(item);
         }
 
-        public IEnumerable<Comment> Find(Func<Comment, bool> predicate)
+        public List<Comment> Find(Func<Comment, bool> predicate)
         {
             return db.Comments.Where(predicate).ToList();
         }
@@ -39,9 +39,9 @@ namespace DAL_TaskTracker.Repositories
             return db.Comments.Find(id);
         }
 
-        public IEnumerable<Comment> GetAll()
+        public List<Comment> GetAll()
         {
-            return db.Comments;
+            return db.Comments.ToList();
         }
 
         public void Update(Comment item)

@@ -17,3 +17,4 @@ namespace BL_TaskTracker.Infrastructure
             Bind<IUnitOfWork>().To<EFUnitOfWork>().WithConstructorArgument(connectionString);
         }
     }
+}

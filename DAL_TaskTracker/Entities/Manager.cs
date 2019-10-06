@@ -3,7 +3,7 @@
 
 namespace DAL_TaskTracker.Entities
 {
-    public class Manager : Employee
+    public class Manager
     {
         public int ManagerId { get; set; }
         public int EmployeeId { get; set; }

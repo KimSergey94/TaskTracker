@@ -6,9 +6,10 @@ namespace DAL_TaskTracker.Repositories.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
+        List<T> GetAll();
         T Get(int id);
-        IEnumerable<T> Find(Func<T, Boolean> predicate); void Create(T item);
+        List<T> Find(Func<T, Boolean> predicate);
+        void Create(T item);
         void Update(T item);
         void Delete(int id);
     }

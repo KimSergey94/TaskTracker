@@ -28,7 +28,7 @@ namespace DAL_TaskTracker.Repositories
                 db.Clients.Remove(item);
         }
 
-        public IEnumerable<Client> Find(Func<Client, bool> predicate)
+        public List<Client> Find(Func<Client, bool> predicate)
         {
             return db.Clients.Where(predicate).ToList();
         }
@@ -38,9 +38,9 @@ namespace DAL_TaskTracker.Repositories
             return db.Clients.Find(id);
         }
 
-        public IEnumerable<Client> GetAll()
+        public List<Client> GetAll()
         {
-            return db.Clients;
+            return db.Clients.ToList();
         }
 
         public void Update(Client item)

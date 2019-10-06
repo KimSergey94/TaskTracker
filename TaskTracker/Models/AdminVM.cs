@@ -4,7 +4,7 @@ namespace TaskTracker.Models
 {
     public class AdminVM
     {
-        public int AdminVMId { get; set; }
+        public int AdminId { get; set; }
         public string Password { get; set; }
         [DataType(DataType.EmailAddress)]
         [Required]
