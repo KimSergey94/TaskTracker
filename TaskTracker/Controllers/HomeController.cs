@@ -2,6 +2,7 @@
 using BL_TaskTracker.Interfaces;
 using BLL_TaskTracker.DTO;
 using DAL_TaskTracker.Entities;
+using DAL_TaskTracker.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -13,6 +14,7 @@ namespace TaskTracker.Controllers
     {
         ITaskService taskService;
 
+       
         public HomeController(ITaskService serv)
         {
             taskService = serv;

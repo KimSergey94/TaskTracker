@@ -46,7 +46,7 @@ namespace DAL_TaskTracker.EF
             db.Employees.Add(new Employee { FirstName = "Kate", LastName = "McConnor", Country = "USA", Position = "Android Developer", Salary = 60000 });
             db.Employees.Add(new Employee { FirstName = "Marshal", LastName = "Houston", Country = "USA", Position = "JavaScript Developer", Salary = 60000 });
 
-            db.Managers.Add(new Manager { Employee = db.Employees.Where(emp => emp.FirstName == "Marshal" && emp.LastName == "Houston").FirstOrDefault() });
+            db.Managers.Add(new Manager { EmployeeId= 2});
             //db.Managers.Add(new Manager { } );
             //db.Managers.Add(new Manager { } );
 
