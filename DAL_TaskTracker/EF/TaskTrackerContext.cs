@@ -32,7 +32,8 @@ namespace DAL_TaskTracker.EF
     {
         protected override void Seed(TaskTrackerContext db)
         {
-            //db.Roles.Add(new Role { Name = "admin", Id = 1 }); db.Roles.Add(new Role { Name = "user", Id = 2 });
+            db.Roles.Add(new Role { Name = "admin" });
+            db.Roles.Add(new Role { Name = "manager" });
 
             db.Clients.Add(new Client { CompanyName = "Google Inc.", Email = "google@google.com", Country = "USA", Address = "666 Central Avenue" });
             db.Clients.Add(new Client { CompanyName = "Test", Email = "test@test.com", Country = "USA", Address = "5th Central Avenue" });
@@ -50,9 +51,9 @@ namespace DAL_TaskTracker.EF
             //db.Managers.Add(new Manager { } );
             //db.Managers.Add(new Manager { } );
 
-            db.Admins.Add(new Admin { Email = "admin@ad.min", Password = "admin"});
+            db.Admins.Add(new Admin { Email = "admin@ad.min", Password = "admin" });
 
-            db.Users.Add(new User { Email= "admin@ad.min", Password="admin@ad.min"});
+            db.Users.Add(new User { Email= "admin@ad.min", Password="admin@ad.min", RoleId=1});
             db.Users.Add(new User { Email = "google@google.com", Password = "google.com" });
             db.Users.Add(new User { Email = "test@test.com", Password = "test.com" });
             db.Users.Add(new User { Email = "techsupport@accenture.com", Password = "accenture.com" });

@@ -17,7 +17,7 @@ namespace DAL_TaskTracker.Entities
         public string Email { get; set; }
         //[Required(ErrorMessage = "Company Name field is required")]
         public string CompanyName { get; set; }
-        public int RoleId { get; set; }
+        //public int RoleId { get; set; }
 
     }
 }
