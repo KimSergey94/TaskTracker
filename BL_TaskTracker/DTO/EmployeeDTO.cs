@@ -21,5 +21,6 @@ namespace BLL_TaskTracker.DTO
         public string Position { get; set; }
         public int Salary { get; set; }
         public int UserId { get; set; }
+
     }
 }

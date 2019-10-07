@@ -1,0 +1,30 @@
+﻿@model TaskTracker.Models.UserVM
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true) 
+
+    <p>
+    @Html.LabelFor(model => model.Email) < br /> 
+    @Html.EditorFor(model => model.Email) 
+    @Html.ValidationMessageFor(model => model.Email)
+    </p>
+
+    <p>
+    @Html.LabelFor(model => model.Password) <br />
+
+    @Html.EditorFor(model => model.Password)
+    @Html.ValidationMessageFor(model => model.Password)
+    </p>
+
+<p>
+    <input type="submit" value="Войти"
+           class="btn btn-default" />
+</p>
+}

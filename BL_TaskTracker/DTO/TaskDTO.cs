@@ -7,6 +7,7 @@ namespace BLL_TaskTracker.DTO
         public int TaskId { get; set; }
         public int ManagerId{ get; set; }
         public bool IsCompleted { get; set; }
+        public string TaskDefinition { get; set; }
 
     }
 }

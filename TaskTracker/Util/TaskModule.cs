@@ -8,7 +8,7 @@ namespace TaskTracker.Util
     {
         public override void Load()
         {
-            Bind<ITaskService>().To<TaskService>();
+            Bind<IOrderService>().To<OrderService>();
         }
     }
 }

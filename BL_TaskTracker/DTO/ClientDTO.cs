@@ -20,5 +20,6 @@ namespace BLL_TaskTracker.DTO
 
         [Required(ErrorMessage = "Company Name field is required")]
         public string CompanyName { get; set; }
+
     }
 }

@@ -1,0 +1,27 @@
+﻿@model TaskTracker.Models.TaskVM
+
+@Html.HiddenFor(model=>model.ManagerId)
+
+    <dl class="=" dl-horizontal">
+        @using (Html.BeginForm())
+        {
+            <dt>@Html.DisplayNameFor(model => model.TaskId)</dt>
+            <dd style="display:none"> @Html.DisplayFor(model => model.TaskId)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.ManagerId)</dt>
+            <dd> @Html.DisplayFor(model => model.ManagerId)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.IsCompleted)</dt>
+            <dd> @Html.DisplayFor(model => model.IsCompleted)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.IsCompleted)</dt>
+            <dd> @Html.DisplayFor(model => model.IsCompleted)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.TaskDefinition)</dt>
+            <dd> @Html.DisplayFor(model => model.TaskDefinition)</dd>
+
+            <dd>
+                <input type="submit" value="Купить">
+            </dd>
+        }
+    </dl>

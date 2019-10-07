@@ -17,6 +17,7 @@ namespace DAL_TaskTracker.Repositories
         private TaskRepository taskRepository;
         private StatusRepository statusRepository;
         private CommentRepository commentRepository;
+        private RoleRepository roleRepository;
 
 
         public EFUnitOfWork(string connectionString)
@@ -123,6 +124,16 @@ namespace DAL_TaskTracker.Repositories
         }
 
 
+        public IRepository<Role> Roles
+        {
+            get
+            {
+                if (roleRepository == null)
+                    roleRepository = new RoleRepository(db);
+                return roleRepository;
+            }
+        }
+
         public IRepository<Comment> Comments
         {
             get
@@ -132,15 +143,7 @@ namespace DAL_TaskTracker.Repositories
                 return commentRepository;
             }
         }
-        //public IRepository<Role> Roles
-        //{
-        //    get
-        //    {
-        //        if (roleRepository == null)
 
-        //            roleRepository = new RoleRepository(db);
-        //        return roleRepository;
-        //    }
-        //}
+        
     }
 }

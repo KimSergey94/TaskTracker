@@ -11,5 +11,6 @@ namespace DAL_TaskTracker.Entities
         public string Position { get; set; }
         public int Salary { get; set; }
         public int UserId { get; set; }
+
     }
 }

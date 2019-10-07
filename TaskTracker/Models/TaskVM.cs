@@ -7,6 +7,8 @@ namespace TaskTracker.Models
         public int TaskId { get; set; }
         public int ManagerId{ get; set; }
         public bool IsCompleted { get; set; }
+
+        public string TaskDefinition { get; set; }
         public virtual List<StatusVM> StatusReports { get; set; }
 
     }

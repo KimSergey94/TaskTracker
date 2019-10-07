@@ -13,6 +13,7 @@ namespace DAL_TaskTracker.Repositories.Interfaces
         IRepository<Task> Tasks { get; }
         IRepository<Status> StatusReports { get; }
         IRepository<Comment> Comments { get; }
+        IRepository<Role> Roles { get; }
 
         void Save();
     }

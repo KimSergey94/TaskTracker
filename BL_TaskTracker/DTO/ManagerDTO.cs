@@ -6,6 +6,7 @@ namespace BLL_TaskTracker.DTO
     {
         public int ManagerId { get; set; }
         public int EmployeeId { get; set; }
+        public virtual EmployeeDTO Employee { get; set; }
 
     }
 }

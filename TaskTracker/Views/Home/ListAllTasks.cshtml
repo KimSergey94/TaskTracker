@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TaskTracker.Models.TaskVM>
+
+<p>
+    @Html.ActionLink("Create New", "CreateTask")
+</p>
+// new { ManagerId = CookieCollection["ManagerId"]})
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ManagerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsCompleted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskDefinition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusReports)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskDefinition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCompleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusReports)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditTask", new { taskId = item.TaskId })
+                @Html.ActionLink("Delete", "DeleteTask", new { taskId = item.TaskId })
+
+            </td>
+        </tr>
+    }
+
+</table>

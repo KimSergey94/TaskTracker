@@ -22,10 +22,16 @@ namespace TaskTracker
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+
+            ModelValidatorProviders.Providers.Clear();
+
+
             NinjectModule orderModule = new TaskModule();
             NinjectModule serviceModule = new ServiceModule("TaskTrackerDb");
             var kernel = new StandardKernel(orderModule, serviceModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+
+
         }
     }
 }

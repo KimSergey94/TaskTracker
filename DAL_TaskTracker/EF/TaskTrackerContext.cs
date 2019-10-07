@@ -15,10 +15,10 @@ namespace DAL_TaskTracker.EF
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Status> StatusReports { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
 
 
-        //public DbSet<Role> Roles { get; set; }
         static TaskTrackerContext()
         {
             Database.SetInitializer(new StoreDbInitializer());
