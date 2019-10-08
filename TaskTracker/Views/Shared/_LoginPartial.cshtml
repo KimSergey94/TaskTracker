@@ -5,6 +5,7 @@
 {
     var identity = (ClaimsIdentity)User.Identity;
     var name = identity.FindFirstValue(ClaimTypes.GivenName) ?? identity.GetUserName();
+
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()

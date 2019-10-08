@@ -5,7 +5,7 @@ namespace BLL_TaskTracker.DTO
     public class ClientDTO
     {
         public int ClientId { get; set; }
-        public int UserId { get; set; }
+
 
 
         [Required(ErrorMessage = "Country field is required")]
@@ -13,13 +13,11 @@ namespace BLL_TaskTracker.DTO
         public string Address { get; set; }
 
 
-        [Required(ErrorMessage = "Email field is required")]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-
-
         [Required(ErrorMessage = "Company Name field is required")]
         public string CompanyName { get; set; }
 
+
+        public int UserId { get; set; }
+        public virtual UserDTO User { get; set; }
     }
 }
