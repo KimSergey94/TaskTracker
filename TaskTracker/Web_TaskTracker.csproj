@@ -163,6 +163,7 @@
     <Compile Include="Models\ManagerRegisterModel.cs" />
     <Compile Include="Models\ManagerVM.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\RoleVM.cs" />
     <Compile Include="Models\StatusVM.cs" />
     <Compile Include="Models\TaskVM.cs" />
     <Compile Include="Models\UserVM.cs" />

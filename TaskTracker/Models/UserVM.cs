@@ -9,9 +9,8 @@ namespace TaskTracker.Models
         [Required]
         public string Email { get; set; }
         public string Password { get; set; }
-
-
-        //public virtual List<Admin> Admins { get; set; }
+        public int RoleId { get; set; }
+        public virtual RoleVM Role { get; set; }
 
     }
 }
