@@ -124,11 +124,11 @@ namespace BL_TaskTracker.Services
             database.Employees.Create(employee);
             database.Save();
         }
-        public void AddManager(EmployeeDTO employeeDTO)
+        public void AddManager(ManagerDTO managerDTO)
         {
             Manager manager = new Manager
             {
-                EmployeeId = employeeDTO.EmployeeId
+                EmployeeId = managerDTO.EmployeeId
             };
             database.Managers.Create(manager);
             database.Save();
@@ -139,7 +139,6 @@ namespace BL_TaskTracker.Services
             database.Admins.Create(admin);
             database.Save();
         }
-
 
         public void AddUser(UserDTO userDTO)
         {
@@ -152,7 +151,19 @@ namespace BL_TaskTracker.Services
             database.Users.Create(user);
             database.Save();
         }
-        
+
+        public void AddClient(ClientDTO clientDTO)
+        {
+            Client client = new Client
+            {
+                Address = clientDTO.Address,
+                CompanyName = clientDTO.CompanyName,
+                Country = clientDTO.Country,
+                UserId = clientDTO.UserId
+            };
+            database.Clients.Create(client);
+            database.Save();
+        }
 
         public void CreateTask(TaskDTO taskDTO)
         {

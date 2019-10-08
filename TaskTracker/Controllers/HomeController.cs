@@ -32,14 +32,6 @@ namespace TaskTracker.Controllers
         }
 
 
-        public ActionResult RegisterAdmin()
-        {
-            ViewBag.Title = "Index page";
-
-            return View();
-        }
-
-
         //[Authorize(Roles = "admin")]
         public ActionResult ListAllTasks()
         {
@@ -66,10 +58,37 @@ namespace TaskTracker.Controllers
             //.ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.TaskId))
             ).CreateMapper();
 
-            var tasks = mapper.Map<List<UserDTO>, List<UserVM>>(taskService.GetUsers());
-            return View(tasks);
+            var users = mapper.Map<List<UserDTO>, List<UserVM>>(taskService.GetUsers());
+            return View(users);
         }
-        
+        public ActionResult ListAllAdmins()
+        {
+            ViewBag.Title = "All Admins";
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<AdminDTO, AdminVM>()
+            //.ForMember(dest => dest.IsCompleted, opt => opt.MapFrom(src => src.IsCompleted))
+            //.ForMember(dest => dest.ManagerId, opt => opt.MapFrom(src => src.ManagerId))
+            //.ForMember(dest => dest.TaskDefinition, opt => opt.MapFrom(src => src.TaskDefinition))
+            //.ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.TaskId))
+            ).CreateMapper();
+
+            var admins = mapper.Map<List<AdminDTO>, List<AdminVM>>(taskService.GetAdmins());
+            return View(admins);
+        }
+        ActionResult ListAllClients()
+        {
+            ViewBag.Title = "All Clients";
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientVM>()
+            //.ForMember(dest => dest.IsCompleted, opt => opt.MapFrom(src => src.IsCompleted))
+            //.ForMember(dest => dest.ManagerId, opt => opt.MapFrom(src => src.ManagerId))
+            //.ForMember(dest => dest.TaskDefinition, opt => opt.MapFrom(src => src.TaskDefinition))
+            //.ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.TaskId))
+            ).CreateMapper();
+
+            var clients = mapper.Map<List<ClientDTO>, List<ClientVM>>(taskService.GetClients());
+            return View(clients);
+        }
 
 
         [Authorize]

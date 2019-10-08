@@ -208,12 +208,16 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\CreateTask.cshtml" />
     <Content Include="Views\Home\Confirm.cshtml" />
-    <Content Include="Views\Home\ListTask.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\RegisterAdmin.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\ListAllUsers.cshtml" />
+    <Content Include="Views\Home\ListAllAdmins.cshtml" />
+    <Content Include="Views\Account\RegisterManager.cshtml" />
+    <Content Include="Views\Account\RegisterEmployee.cshtml" />
+    <Content Include="Views\Home\ListAllClients.cshtml" />
+    <Content Include="Views\Account\RegisterClient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

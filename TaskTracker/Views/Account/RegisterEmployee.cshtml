@@ -1,0 +1,67 @@
+﻿@model TaskTracker.Models.EmployeeRegisterModel
+
+@{
+    ViewBag.Title = "Employee Registration";
+}
+
+    <h2>Employee registration</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <p>
+        @Html.LabelFor(model => model.FirstName)<br />
+        @Html.EditorFor(model => model.FirstName)
+        @Html.ValidationMessageFor(model => model.FirstName)
+    </p>
+
+    <p>
+        @Html.LabelFor(model => model.LastName)<br />
+        @Html.EditorFor(model => model.LastName)
+        @Html.ValidationMessageFor(model => model.LastName)
+    </p>
+
+    <p>
+        @Html.LabelFor(model => model.Country)<br />
+        @Html.EditorFor(model => model.Country)
+        @Html.ValidationMessageFor(model => model.Country)
+    </p>
+
+    <p>
+        @Html.LabelFor(model => model.Position)<br />
+        @Html.EditorFor(model => model.Position)
+        @Html.ValidationMessageFor(model => model.Position)
+    </p>
+
+    <p>
+        @Html.LabelFor(model => model.Salary)<br />
+        @Html.EditorFor(model => model.Salary)
+        @Html.ValidationMessageFor(model => model.Salary)
+    </p>
+
+    <p>
+        @Html.LabelFor(model => model.Email) <br />
+
+        @Html.EditorFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email)
+    </p>
+
+    <p>
+        @Html.LabelFor(model => model.Password) <br />
+
+        @Html.EditorFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+    </p>
+
+    <p>
+        @Html.LabelFor(model => model.ConfirmPassword)<br />
+        @Html.EditorFor(model => model.ConfirmPassword)
+        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+    </p>
+
+    <p>
+        <input type="submit" value="Register Employee" class="btn btn-default" />
+    </p>
+}

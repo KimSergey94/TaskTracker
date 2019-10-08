@@ -11,9 +11,10 @@ namespace BL_TaskTracker.Interfaces
         void CreateTask(TaskDTO taskDTO);
         void AddTask(TaskDTO taskDTO);
         void AddEmployee(EmployeeDTO employeeDTO);
-        void AddManager(EmployeeDTO employeeDTO);
+        void AddManager(ManagerDTO ManagerDTO);
         void AddAdmin(AdminDTO adminDTO);
         void AddUser(UserDTO userDTO);
+        void AddClient(ClientDTO clientDTO);
 
         string GetUserRoleName(int roleId);
 
