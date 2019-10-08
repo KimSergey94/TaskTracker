@@ -31,6 +31,9 @@ namespace TaskTracker.Controllers
                 {
                     Session["Email"] = user.Email;
                     Session["Id"] = user.UserId;
+
+                    Session["Role"] = orderService.GetUserRoleName(user.RoleId);
+
                     FormsAuthentication.SetAuthCookie(model.Email, true);
                     return RedirectToAction("Index", "Home");
                 }

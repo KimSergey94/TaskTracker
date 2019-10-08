@@ -15,6 +15,7 @@ namespace BL_TaskTracker.Interfaces
         void AddAdmin(AdminDTO adminDTO);
         void AddUser(UserDTO userDTO);
 
+        string GetUserRoleName(int roleId);
 
         List<UserDTO> GetUsers();//
         List<AdminDTO> GetAdmins();//

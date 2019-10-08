@@ -63,31 +63,39 @@ namespace BL_TaskTracker.Services
         public List<ManagerDTO> GetManagers()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Manager>, List<ManagerDTO>>(database.Managers.GetAll());
+            return mapper.Map<List<Manager>, List<ManagerDTO>>(database.Managers.GetAll());
         }
 
         public List<EmployeeDTO> GetEmployees()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Employee, EmployeeDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Employee>, List<EmployeeDTO>>(database.Employees.GetAll());
+            return mapper.Map<List<Employee>, List<EmployeeDTO>>(database.Employees.GetAll());
         }
 
         public List<ClientDTO> GetClients()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Client, ClientDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Client>, List<ClientDTO>>(database.Clients.GetAll());
+            return mapper.Map<List<Client>, List<ClientDTO>>(database.Clients.GetAll());
         }
 
         public List<AdminDTO> GetAdmins()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Admin, AdminDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Admin>, List<AdminDTO>>(database.Admins.GetAll());
+            return mapper.Map<List<Admin>, List<AdminDTO>>(database.Admins.GetAll());
         }
 
         public List<RoleDTO> GetRoles()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Role, RoleDTO>()).CreateMapper();
             return mapper.Map<List<Role>, List<RoleDTO>>(database.Roles.GetAll());
+        }
+
+        public string GetUserRoleName(int roleId)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Role, RoleDTO>()).CreateMapper();
+            RoleDTO userRole = mapper.Map<Role, RoleDTO>(database.Roles.Get(roleId));
+
+            return userRole.Name;
         }
 
 
