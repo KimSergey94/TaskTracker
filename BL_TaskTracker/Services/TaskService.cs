@@ -3,23 +3,26 @@ using BLL_TaskTracker.DTO;
 using BLL_TaskTracker.Interfaces;
 using DAL_TaskTracker.Entities;
 using DAL_TaskTracker.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Task = DAL_TaskTracker.Entities.Task;
 
-namespace BLL_TaskTracker.Services
+namespace BL_TaskTracker.Services
 {
-    public class OrderService : IOrderService
+    public class TaskService : ITaskService
     {
         IUnitOfWork database { get; set; }
-        public OrderService(IUnitOfWork uow)
+
+        public TaskService(IUnitOfWork uow)
         {
             database = uow;
         }
 
 
-       
+
         public List<UserDTO> GetUsers()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>()).CreateMapper();
@@ -109,78 +112,21 @@ namespace BLL_TaskTracker.Services
             database.Tasks.Create(task);
             database.Save();
         }
-        public void AddEmployee(EmployeeDTO employeeDTO)
-        {
-            Employee employee = new Employee
-            {
-                Country = employeeDTO.Country,
-                FirstName = employeeDTO.FirstName,
-                LastName = employeeDTO.LastName,
-                Position = employeeDTO.Position,
-                Salary = employeeDTO.Salary,
-                UserId = employeeDTO.UserId,
-            };
-            database.Employees.Create(employee);
-            database.Save();
-        }
-        public void AddManager(ManagerDTO managerDTO)
-        {
-            Manager manager = new Manager
-            {
-                EmployeeId = managerDTO.EmployeeId
-            };
-            database.Managers.Create(manager);
-            database.Save();
-        }
-        public void AddAdmin(AdminDTO adminDTO)
-        {
-            Admin admin = new Admin { UserId = adminDTO.UserId };//userId
-            database.Admins.Create(admin);
-            database.Save();
-        }
-
-        public void AddUser(UserDTO userDTO)
-        {
-            User user = new User
-            {
-                Email = userDTO.Email,
-                Password = userDTO.Password,
-                RoleId = userDTO.RoleId
-            };
-            database.Users.Create(user);
-            database.Save();
-        }
-
-        public void AddClient(ClientDTO clientDTO)
-        {
-            Client client = new Client
-            {
-                Address = clientDTO.Address,
-                CompanyName = clientDTO.CompanyName,
-                Country = clientDTO.Country,
-                UserId = clientDTO.UserId
-            };
-            database.Clients.Create(client);
-            database.Save();
-        }
+       
 
         public void CreateTask(TaskDTO taskDTO)
         {
             Manager manager = database.Managers.Get(taskDTO.ManagerId);
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, Task>()
-            .ForMember(dest => dest.IsCompleted, opt => opt.MapFrom(src => src.IsCompleted))
-            .ForMember(dest => dest.ManagerId, opt => opt.MapFrom(src => src.ManagerId))
-            .ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.TaskId))
-            ).CreateMapper();
-
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, Task>()).CreateMapper();
 
             Task task = mapper.Map<TaskDTO, Task>(taskDTO);// new Task
-            
+
             database.Tasks.Create(task); ;
             database.Save();
 
         }
+
 
         public void Dispose()
         {

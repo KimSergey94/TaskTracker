@@ -1,19 +1,17 @@
 ﻿using BLL_TaskTracker.DTO;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BLL_TaskTracker.Interfaces
 {
-    public interface IOrderService
+    public interface ITaskService
     {
         void CreateTask(TaskDTO taskDTO);
-        void AddTask(TaskDTO taskDTO);
-        void AddEmployee(EmployeeDTO employeeDTO);
-        void AddManager(ManagerDTO ManagerDTO);
-        void AddAdmin(AdminDTO adminDTO);
-        void AddUser(UserDTO userDTO);
-        void AddClient(ClientDTO clientDTO);
+        //int GetManagerId(TaskDTO taskDTO);
 
-        string GetUserRoleName(int roleId);
 
         List<UserDTO> GetUsers();//
         List<AdminDTO> GetAdmins();//

@@ -1,5 +1,4 @@
-﻿using BL_TaskTracker.DTO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BLL_TaskTracker.DTO
 {

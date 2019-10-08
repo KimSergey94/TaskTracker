@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL_TaskTracker.Infrastructure
+namespace BLL_TaskTracker.Infrastructure
 {
     public class ValidationException : Exception
     {

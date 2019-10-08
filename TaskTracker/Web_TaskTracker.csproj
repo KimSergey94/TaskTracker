@@ -150,6 +150,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -218,6 +219,10 @@
     <Content Include="Views\Account\RegisterEmployee.cshtml" />
     <Content Include="Views\Home\ListAllClients.cshtml" />
     <Content Include="Views\Account\RegisterClient.cshtml" />
+    <Content Include="Views\Home\ListAllManagers.cshtml" />
+    <Content Include="Views\Home\ListAllEmployees.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Task\CreateTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

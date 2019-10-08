@@ -1,5 +1,4 @@
-﻿using BL_TaskTracker.DTO;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BLL_TaskTracker.DTO
 {

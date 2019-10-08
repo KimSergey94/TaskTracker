@@ -1,0 +1,39 @@
+﻿
+@model IEnumerable<TaskTracker.Models.ManagerVM>
+
+<p>
+    @Html.ActionLink("Register New Manager", "RegisterManager")
+</p>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ManagerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeId)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "EditTask", new { taskId = item.ManagerId })
+                @Html.ActionLink("Delete", "DeleteTask", new { taskId = item.ManagerId })
+
+            </td>
+        </tr>
+    }
+
+</table>

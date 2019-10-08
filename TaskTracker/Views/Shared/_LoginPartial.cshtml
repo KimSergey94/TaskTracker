@@ -1,8 +1,9 @@
-﻿
-
-@if (Request.IsAuthenticated)
-{
+﻿@{ 
     var email = Session["Email"];
+}
+
+@if (Request.IsAuthenticated && email != null && email!="")
+{
     var id = Session["Id"];
     var role = Session["Role"];
 
@@ -12,17 +13,16 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hello " + email + "!" , "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink("Hello " + email + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
-        
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "RegisterAdmin", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Register", "Register", "Account")</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account")</li>
     </ul>
 }

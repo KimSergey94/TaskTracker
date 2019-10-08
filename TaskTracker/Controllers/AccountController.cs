@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BL_TaskTracker.Interfaces;
+using BLL_TaskTracker.Interfaces;
 using BLL_TaskTracker.DTO;
 using System;
 using System.Collections.Generic;
@@ -52,7 +52,12 @@ namespace TaskTracker.Controllers
             return mapper.Map<List<UserDTO>, List<UserVM>>(userDtos);
         }
 
+        public ActionResult Register()
+        {
+            return View();
+        }
 
+        [Authorize(Roles = "admin")]
         public ActionResult RegisterAdmin()
         {
             return View();
@@ -107,6 +112,7 @@ namespace TaskTracker.Controllers
         }
 
 
+        [Authorize(Roles = "admin")]
         public ActionResult RegisterManager()
         {
             return View();
@@ -175,6 +181,8 @@ namespace TaskTracker.Controllers
             return View(model);
         }
 
+
+        [Authorize(Roles = "admin")]
         public ActionResult RegisterEmployee()
         {
             return View();
@@ -235,6 +243,8 @@ namespace TaskTracker.Controllers
             return View(model);
         }
 
+
+        [Authorize(Roles = "manager, admin")]
         public ActionResult RegisterClient()
         {
             return View();
@@ -258,7 +268,7 @@ namespace TaskTracker.Controllers
                     {
                         Email = model.Email,
                         Password = model.Password,
-                        RoleId = 3
+                        RoleId = 4
                     };
                     orderService.AddUser(userDTO);
 
@@ -293,10 +303,7 @@ namespace TaskTracker.Controllers
             return View(model);
         }
 
-
         
-
-
         public ActionResult Logoff()
         {
             Session["Email"] = null;

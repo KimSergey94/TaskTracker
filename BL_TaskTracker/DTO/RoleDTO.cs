@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL_TaskTracker.DTO
+namespace BLL_TaskTracker.DTO
 {
     public class RoleDTO
     {

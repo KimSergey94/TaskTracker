@@ -1,5 +1,5 @@
-﻿using BL_TaskTracker.Interfaces;
-using BL_TaskTracker.Services;
+﻿using BLL_TaskTracker.Interfaces;
+using BLL_TaskTracker.Services;
 using Ninject.Modules;
 
 namespace TaskTracker.Util

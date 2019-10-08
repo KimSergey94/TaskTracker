@@ -1,26 +1,23 @@
 ﻿using AutoMapper;
-using BL_TaskTracker.Interfaces;
 using BLL_TaskTracker.DTO;
-using BL_TaskTracker.Infrastructure;
-
+using BLL_TaskTracker.Interfaces;
 using DAL_TaskTracker.Entities;
 using DAL_TaskTracker.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using TaskTracker.Models;
-using ValidationException = BL_TaskTracker.Infrastructure.ValidationException;
 
 namespace TaskTracker.Controllers
 {
     public class HomeController : Controller
     {
-        IOrderService taskService;
+        IOrderService orderService;
 
        
         public HomeController(IOrderService serv)
         {
-            taskService = serv;
+            orderService = serv;
         }
 
 
@@ -37,106 +34,63 @@ namespace TaskTracker.Controllers
         {
             ViewBag.Title = "All Tasks";
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskVM>()
-            //.ForMember(dest => dest.IsCompleted, opt => opt.MapFrom(src => src.IsCompleted))
-            //.ForMember(dest => dest.ManagerId, opt => opt.MapFrom(src => src.ManagerId))
-            //.ForMember(dest => dest.TaskDefinition, opt => opt.MapFrom(src => src.TaskDefinition))
-            //.ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.TaskId))
-            ).CreateMapper();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskVM>()).CreateMapper();
 
-            var tasks = mapper.Map<List<TaskDTO>, List<TaskVM>>(taskService.GetTasks());
+            var tasks = mapper.Map<List<TaskDTO>, List<TaskVM>>(orderService.GetTasks());
             return View(tasks);
         }
         public ActionResult ListAllUsers()
         {
             ViewBag.Title = "All Users";
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserVM>()
-            //.ForMember(dest => dest.IsCompleted, opt => opt.MapFrom(src => src.IsCompleted))
-            //.ForMember(dest => dest.ManagerId, opt => opt.MapFrom(src => src.ManagerId))
-            //.ForMember(dest => dest.TaskDefinition, opt => opt.MapFrom(src => src.TaskDefinition))
-            //.ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.TaskId))
-            ).CreateMapper();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserVM>()).CreateMapper();
 
-            var users = mapper.Map<List<UserDTO>, List<UserVM>>(taskService.GetUsers());
+            var users = mapper.Map<List<UserDTO>, List<UserVM>>(orderService.GetUsers());
             return View(users);
         }
         public ActionResult ListAllAdmins()
         {
             ViewBag.Title = "All Admins";
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<AdminDTO, AdminVM>()
-            //.ForMember(dest => dest.IsCompleted, opt => opt.MapFrom(src => src.IsCompleted))
-            //.ForMember(dest => dest.ManagerId, opt => opt.MapFrom(src => src.ManagerId))
-            //.ForMember(dest => dest.TaskDefinition, opt => opt.MapFrom(src => src.TaskDefinition))
-            //.ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.TaskId))
-            ).CreateMapper();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<AdminDTO, AdminVM>()).CreateMapper();
 
-            var admins = mapper.Map<List<AdminDTO>, List<AdminVM>>(taskService.GetAdmins());
+            var admins = mapper.Map<List<AdminDTO>, List<AdminVM>>(orderService.GetAdmins());
             return View(admins);
         }
-        ActionResult ListAllClients()
+        public ActionResult ListAllClients()
         {
             ViewBag.Title = "All Clients";
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientVM>()
-            //.ForMember(dest => dest.IsCompleted, opt => opt.MapFrom(src => src.IsCompleted))
-            //.ForMember(dest => dest.ManagerId, opt => opt.MapFrom(src => src.ManagerId))
-            //.ForMember(dest => dest.TaskDefinition, opt => opt.MapFrom(src => src.TaskDefinition))
-            //.ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.TaskId))
-            ).CreateMapper();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientVM>()).CreateMapper();
 
-            var clients = mapper.Map<List<ClientDTO>, List<ClientVM>>(taskService.GetClients());
+            var clients = mapper.Map<List<ClientDTO>, List<ClientVM>>(orderService.GetClients());
             return View(clients);
         }
 
-
-        [Authorize]
-        public ActionResult CreateTask(int managerId)
+        public ActionResult ListAllManagers()
         {
-            ViewBag.ManagerId = managerId;
+            ViewBag.Title = "All Managers";
 
-            try
-            {
-                TaskVM newTask = new TaskVM
-                {
-                    ManagerId = managerId
-                };
-                return View(newTask);
-            }
-            catch (BL_TaskTracker.Infrastructure.ValidationException ex)
-            {
-                return Content(ex.Message);
-            }
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ManagerDTO, ManagerVM>()).CreateMapper();
+
+            var clients = mapper.Map<List<ManagerDTO>, List<ManagerVM>>(orderService.GetManagers());
+            return View(clients);
         }
 
-        [HttpPost]
-
-        public ActionResult CreateTask(TaskVM task)
+        public ActionResult ListAllEmployees()
         {
-            try
-            {
-                var taskDTO = new TaskDTO
-                {
-                    TaskId = 2,
-                    IsCompleted = false,
-                    ManagerId = task.ManagerId,
-                    TaskDefinition = task.TaskDefinition
-                };
-                taskService.CreateTask(taskDTO);
-                return View("Confirm");
-            }
-            catch (ValidationException ex)
-            {
-                ModelState.AddModelError(ex.Property, ex.Message);
-            }
-            return View(task);
+            ViewBag.Title = "All Employees";
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<EmployeeDTO, EmployeeVM>()).CreateMapper();
+
+            var clients = mapper.Map<List<EmployeeDTO>, List<EmployeeVM>>(orderService.GetEmployees());
+            return View(clients);
         }
 
 
         protected override void Dispose(bool diposing)
         {
-            taskService.Dispose();
+            orderService.Dispose();
             base.Dispose(diposing);
 
         }
