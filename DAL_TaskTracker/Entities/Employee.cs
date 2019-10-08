@@ -23,8 +23,8 @@ namespace DAL_TaskTracker.Entities
         public int Salary { get; set; }
 
         public int UserId { get; set; }
-        public virtual User User { get; set; }
+        //public virtual User User { get; set; }
 
-        public virtual ICollection<Task> Tasks { get; set; }
+        //public virtual ICollection<Task> Tasks { get; set; }
     }
 }

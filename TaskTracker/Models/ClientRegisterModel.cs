@@ -8,6 +8,8 @@ namespace TaskTracker.Models
 {
     public class ClientRegisterModel
     {
+        [Key]
+
         [Required(ErrorMessage = "Client Id field is required")]
         public int ClientId { get; set; }
         public int UserId { get; set; }

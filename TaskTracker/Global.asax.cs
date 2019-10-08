@@ -1,9 +1,11 @@
 ﻿using BL_TaskTracker.Infrastructure;
+using DAL_TaskTracker.EF;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,6 +19,11 @@ namespace TaskTracker
     {
         protected void Application_Start()
         {
+
+            System.Data.Entity.Database.SetInitializer<TaskTrackerContext>(new TaskTrackerDbInitializer());
+            var db = new TaskTrackerContext("TaskTrackerDb");
+            db.Database.Initialize(true);
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -31,6 +38,8 @@ namespace TaskTracker
             var kernel = new StandardKernel(orderModule, serviceModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
 
+            
+            //TaskTrackerContext.Initialize();
 
         }
     }

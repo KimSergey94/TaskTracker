@@ -4,6 +4,7 @@ namespace TaskTracker.Models
 {
     public class UserVM
     {
+        [Key]
         public int UserId { get; set; }
         [DataType(DataType.EmailAddress)]
         [Required]

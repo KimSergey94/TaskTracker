@@ -7,6 +7,8 @@ namespace TaskTracker.Models
 {
     public class EmployeeVM
     {
+        [Key]
+
         public int EmployeeId { get; set; }
 
 

@@ -17,27 +17,32 @@ namespace DAL_TaskTracker.EF
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Role> Roles { get; set; }
 
-
+        public static void Initialize()
+        {
+            Database.SetInitializer(new TaskTrackerDbInitializer());
+        }
 
         static TaskTrackerContext()
         {
-            Database.SetInitializer(new StoreDbInitializer());
+            Database.SetInitializer(new TaskTrackerDbInitializer());
         }
         public TaskTrackerContext(string connectionString) : base(connectionString)
         { }
     }
 
 
-    public class StoreDbInitializer : DropCreateDatabaseIfModelChanges<TaskTrackerContext>
+    public class TaskTrackerDbInitializer : DropCreateDatabaseIfModelChanges<TaskTrackerContext>
     {
         protected override void Seed(TaskTrackerContext db)
         {
             db.Roles.Add(new Role { Name = "admin" });
             db.Roles.Add(new Role { Name = "manager" });
+            db.Roles.Add(new Role { Name = "employee" });
+            db.Roles.Add(new Role { Name = "client" });
 
-            db.Clients.Add(new Client { CompanyName = "Google Inc.", Email = "google@google.com", Country = "USA", Address = "666 Central Avenue" });
-            db.Clients.Add(new Client { CompanyName = "Test", Email = "test@test.com", Country = "USA", Address = "5th Central Avenue" });
-            db.Clients.Add(new Client { CompanyName = "Accenture", Email = "techsupport@accenture.com", Country = "USA", Address = "8th Mile" });
+            db.Clients.Add(new Client { CompanyName = "Google Inc.", Country = "USA", Address = "666 Central Avenue" });
+            db.Clients.Add(new Client { CompanyName = "Test", Country = "USA", Address = "5th Central Avenue" });
+            db.Clients.Add(new Client { CompanyName = "Accenture", Country = "USA", Address = "8th Mile" });
 
             db.Employees.Add(new Employee { FirstName = "Edward", LastName = "Johnson", Country = "USA", Position = ".NET Developer", Salary = 60000 });
             db.Employees.Add(new Employee { FirstName = "Bill", LastName = "White", Country = "USA", Position = "C# Developer", Salary = 55000 });
@@ -47,24 +52,29 @@ namespace DAL_TaskTracker.EF
             db.Employees.Add(new Employee { FirstName = "Kate", LastName = "McConnor", Country = "USA", Position = "Android Developer", Salary = 60000 });
             db.Employees.Add(new Employee { FirstName = "Marshal", LastName = "Houston", Country = "USA", Position = "JavaScript Developer", Salary = 60000 });
 
-            db.Managers.Add(new Manager { EmployeeId= 2});
+            db.Managers.Add(new Manager { });
             //db.Managers.Add(new Manager { } );
             //db.Managers.Add(new Manager { } );
 
-            db.Admins.Add(new Admin { Email = "admin@ad.min", Password = "admin" });
+            db.Users.Add(new User { Email= "admin@ad.min", Password="admin@ad.min", RoleId = 1});
+            db.Admins.Add(new Admin { UserId = 1 });
 
-            db.Users.Add(new User { Email= "admin@ad.min", Password="admin@ad.min", RoleId=1});
-            db.Users.Add(new User { Email = "google@google.com", Password = "google.com" });
+            db.Roles.Add(new Role { Name = "manager" });
+            db.Managers.Add( new Manager {  });
+
+            db.Roles.Add(new Role { Name = "employee" });
+            db.Users.Add(new User { RoleId = 3, Email = "google@google.com", Password = "google.com" });
+
             db.Users.Add(new User { Email = "test@test.com", Password = "test.com" });
             db.Users.Add(new User { Email = "techsupport@accenture.com", Password = "accenture.com" });
 
             db.Comments.Add( new Comment { Message = "The task has been assigned"});
             db.Comments.Add( new Comment { Message = "The employee has received the task" });
 
-            db.StatusReports.Add(new Status { Title = "In progress", IsCompleted = false, Comments=db.Comments.Where(message => message.Message == "The task has been assigned").ToList()});
-            db.StatusReports.Add(new Status { Title = "In progress", IsCompleted = false, Comments=db.Comments.Where(message => message.Message == "The employee has received the task").ToList()});
+            db.StatusReports.Add(new Status { Message = "In progress", IsCompleted = false });
+            db.StatusReports.Add(new Status { Message = "In progress", IsCompleted = false });
 
-            db.Tasks.Add(new Task { IsCompleted = false, StatusReports = db.StatusReports.Where(title => title.Title == "In progress").ToList() });
+            db.Tasks.Add(new Task { IsCompleted = false });
 
             db.SaveChanges();
 

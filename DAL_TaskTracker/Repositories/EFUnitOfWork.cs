@@ -20,9 +20,9 @@ namespace DAL_TaskTracker.Repositories
         private RoleRepository roleRepository;
 
 
-        public EFUnitOfWork(string connectionString)
+        public EFUnitOfWork()
         {
-            db = new TaskTrackerContext(connectionString);
+            db = new TaskTrackerContext("TaskTrackerDb");
         }
 
 

@@ -29,9 +29,10 @@ namespace TaskTracker.Controllers
                 user = users.FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
                 if (user != null)
                 {
-                    Session["email"] = user.Email;
+                    Session["Email"] = user.Email;
                     Session["Id"] = user.UserId;
-                    FormsAuthentication.SetAuthCookie(model.Email, true); return RedirectToAction("Index", "Home");
+                    FormsAuthentication.SetAuthCookie(model.Email, true);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -72,7 +73,8 @@ namespace TaskTracker.Controllers
                     var userDTO = new UserDTO
                     {
                         Email = model.Email,
-                        Password = model.Password
+                        Password = model.Password,
+                        RoleId = 1
                     };
                     orderService.AddUser(userDTO);
 

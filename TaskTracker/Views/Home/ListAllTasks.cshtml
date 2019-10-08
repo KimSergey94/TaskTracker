@@ -19,7 +19,7 @@
             @Html.DisplayNameFor(model => model.TaskDefinition)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StatusReports)
+            @Html.DisplayNameFor(model => model.Statuses)
         </th>
         <th></th>
     </tr>
@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.IsCompleted)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StatusReports)
+                @Html.DisplayFor(modelItem => item.Statuses)
             </td>
             <td>
                 @Html.ActionLink("Edit", "EditTask", new { taskId = item.TaskId })

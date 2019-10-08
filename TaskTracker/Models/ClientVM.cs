@@ -6,6 +6,8 @@ namespace TaskTracker.Models
 {
     public class ClientVM
     {
+        [Key]
+
         public int ClientId { get; set; }
 
 

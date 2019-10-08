@@ -40,7 +40,7 @@ namespace TaskTracker.Controllers
         }
 
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult ListAllTasks()
         {
             ViewBag.Title = "All Tasks";
@@ -55,10 +55,24 @@ namespace TaskTracker.Controllers
             var tasks = mapper.Map<List<TaskDTO>, List<TaskVM>>(taskService.GetTasks());
             return View(tasks);
         }
+        public ActionResult ListAllUsers()
+        {
+            ViewBag.Title = "All Users";
 
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserVM>()
+            //.ForMember(dest => dest.IsCompleted, opt => opt.MapFrom(src => src.IsCompleted))
+            //.ForMember(dest => dest.ManagerId, opt => opt.MapFrom(src => src.ManagerId))
+            //.ForMember(dest => dest.TaskDefinition, opt => opt.MapFrom(src => src.TaskDefinition))
+            //.ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.TaskId))
+            ).CreateMapper();
 
+            var tasks = mapper.Map<List<UserDTO>, List<UserVM>>(taskService.GetUsers());
+            return View(tasks);
+        }
         
 
+
+        [Authorize]
         public ActionResult CreateTask(int managerId)
         {
             ViewBag.ManagerId = managerId;

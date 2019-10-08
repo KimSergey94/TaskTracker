@@ -8,6 +8,8 @@ namespace TaskTracker.Models
 {
     public class ManagerRegisterModel
     {
+        [Key]
+
         public int ManagerId { get; set; }
         public int EmployeeId { get; set; }
         [Required]

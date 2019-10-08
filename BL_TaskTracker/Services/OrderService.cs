@@ -127,11 +127,7 @@ namespace BL_TaskTracker.Services
         }
         public void AddAdmin(AdminDTO adminDTO)
         {
-            Admin admin = new Admin
-            {
-                Email = adminDTO.Email,
-                Password = adminDTO.Password
-            };
+            Admin admin = new Admin { UserId = adminDTO.UserId };//userId
             database.Admins.Create(admin);
             database.Save();
         }
@@ -142,7 +138,8 @@ namespace BL_TaskTracker.Services
             User user = new User
             {
                 Email = userDTO.Email,
-                Password = userDTO.Password
+                Password = userDTO.Password,
+                RoleId = userDTO.RoleId
             };
             database.Users.Create(user);
             database.Save();

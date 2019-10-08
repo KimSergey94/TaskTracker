@@ -1,10 +1,9 @@
-﻿@using Microsoft.AspNet.Identity
-@using System.Security.Claims
+﻿
 
 @if (Request.IsAuthenticated)
 {
-    var identity = (ClaimsIdentity)User.Identity;
-    var name = identity.FindFirstValue(ClaimTypes.GivenName) ?? identity.GetUserName();
+    var email = Session["Email"];
+    var id = Session["Id"];
 
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -12,7 +11,7 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hello " + name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink("Hello " + email + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>

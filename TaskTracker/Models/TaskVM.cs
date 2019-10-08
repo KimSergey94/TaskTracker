@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TaskTracker.Models
 {
     public class TaskVM
     {
+        [Key]
         public int TaskId { get; set; }
 
         public bool IsCompleted { get; set; }
