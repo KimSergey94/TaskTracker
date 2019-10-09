@@ -4,8 +4,6 @@ using BLL_TaskTracker.Interfaces;
 using DAL_TaskTracker.Entities;
 using DAL_TaskTracker.Repositories.Interfaces;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Threading.Tasks;
 using Task = DAL_TaskTracker.Entities.Task;
 
 namespace BLL_TaskTracker.Services
@@ -18,8 +16,17 @@ namespace BLL_TaskTracker.Services
             database = uow;
         }
 
+        public TaskDTO GetTasksWithIncludedStatuses(TaskDTO task)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>()).CreateMapper();
+            ICollection<Status> statuses = database.Statuses.GetAll().FindAll(x => x.TaskId == task.TaskId);
+            var taskStatuses = mapper.Map<ICollection<Status>, ICollection<StatusDTO>>(statuses);
+             
+            task.Statuses = taskStatuses;
+            return task;
+        }
 
-       
+
         public List<UserDTO> GetUsers()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>()).CreateMapper();
@@ -41,10 +48,10 @@ namespace BLL_TaskTracker.Services
         }
 
 
-        public List<StatusDTO> GetStatusReports()
+        public List<StatusDTO> GetStatuses()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Status, StatusDTO>()).CreateMapper();
-            return mapper.Map<List<Status>, List<StatusDTO>>(database.StatusReports.GetAll());
+            return mapper.Map<List<Status>, List<StatusDTO>>(database.Statuses.GetAll());
         }
 
         public List<CommentDTO> GetComments()
@@ -109,6 +116,19 @@ namespace BLL_TaskTracker.Services
             database.Tasks.Create(task);
             database.Save();
         }
+        public void CreateStatus(StatusDTO statusDTO)
+        {
+            Status status = new Status
+            {
+                TaskId = statusDTO.TaskId,
+                Message = statusDTO.Message,
+                IsCompleted = statusDTO.IsCompleted
+            };
+            database.Statuses.Create(status);
+            database.Save();
+        }
+
+
         public void AddEmployee(EmployeeDTO employeeDTO)
         {
             Employee employee = new Employee
@@ -166,12 +186,9 @@ namespace BLL_TaskTracker.Services
 
         public void CreateTask(TaskDTO taskDTO)
         {
-            Manager manager = database.Managers.Get(taskDTO.ManagerId);
+            //Manager manager = database.Managers.Get(taskDTO.ManagerId);
 
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, Task>()
-            .ForMember(dest => dest.IsCompleted, opt => opt.MapFrom(src => src.IsCompleted))
-            .ForMember(dest => dest.ManagerId, opt => opt.MapFrom(src => src.ManagerId))
-            .ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.TaskId))
             ).CreateMapper();
 
 

@@ -29,16 +29,9 @@ namespace TaskTracker.Controllers
         }
 
 
-        //[Authorize(Roles = "admin")]
-        public ActionResult ListAllTasks()
-        {
-            ViewBag.Title = "All Tasks";
+        
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskVM>()).CreateMapper();
-
-            var tasks = mapper.Map<List<TaskDTO>, List<TaskVM>>(orderService.GetTasks());
-            return View(tasks);
-        }
+        [Authorize(Roles = "admin")]
         public ActionResult ListAllUsers()
         {
             ViewBag.Title = "All Users";
@@ -48,6 +41,8 @@ namespace TaskTracker.Controllers
             var users = mapper.Map<List<UserDTO>, List<UserVM>>(orderService.GetUsers());
             return View(users);
         }
+
+        [Authorize(Roles = "admin")]
         public ActionResult ListAllAdmins()
         {
             ViewBag.Title = "All Admins";
@@ -57,6 +52,8 @@ namespace TaskTracker.Controllers
             var admins = mapper.Map<List<AdminDTO>, List<AdminVM>>(orderService.GetAdmins());
             return View(admins);
         }
+
+        [Authorize(Roles = "admin")]
         public ActionResult ListAllClients()
         {
             ViewBag.Title = "All Clients";
@@ -67,6 +64,7 @@ namespace TaskTracker.Controllers
             return View(clients);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult ListAllManagers()
         {
             ViewBag.Title = "All Managers";
@@ -77,6 +75,8 @@ namespace TaskTracker.Controllers
             return View(clients);
         }
 
+
+        [Authorize(Roles = "admin, manager")]
         public ActionResult ListAllEmployees()
         {
             ViewBag.Title = "All Employees";

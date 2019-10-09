@@ -31,7 +31,7 @@ namespace DAL_TaskTracker.EF
     }
 
 
-    public class TaskTrackerDbInitializer : DropCreateDatabaseIfModelChanges<TaskTrackerContext>
+    public class TaskTrackerDbInitializer : DropCreateDatabaseAlways<TaskTrackerContext>
     {
         protected override void Seed(TaskTrackerContext db)
         {

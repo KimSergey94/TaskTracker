@@ -1,0 +1,87 @@
+﻿@model TaskTracker.Models.StatusVM
+@{
+    ViewBag.Title = "Status Details";
+}
+
+<h2>Status Details</h2>
+
+
+<table class="table">
+
+
+    <tr>
+        <th>Status Id</th>
+        <th>Task Id</th>
+        <th>Message</th>
+        <th>Is Completed</th>
+
+        @if (Session["Role"].ToString() != null)
+        {
+            if (Session["Role"].ToString()  == "manager" || Session["Role"].ToString() == "employee")
+            {
+                <th>Add Comment</th>
+            }
+        }
+
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.StatusId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.TaskId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.Message)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.IsCompleted)
+        </td>
+
+        @if (Session["Role"].ToString() != null)
+        {
+            if (Session["Role"].ToString() == "manager" || Session["Role"].ToString() == "employee")
+            {
+                <td>@Html.ActionLink("Add Comment", "CreateComment", new { statusId = Model.StatusId })</td>
+            }
+        }
+
+    </tr>
+</table>
+
+@if (Model.Comments.Count > 0)
+{
+    <table class="table">
+        <tr>
+            <th>Comments</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <th>Comment Id</th>
+            <th>Status Id</th>
+            <th>Message</th>
+            <th></th>
+
+        </tr>
+
+        @foreach (var status in Model.Comments)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => status.CommentId)</td>
+                <td>@Html.DisplayFor(modelItem => status.StatusId)</td>
+                <td>@Html.DisplayFor(modelItem => status.Message)</td>
+                <td>@Html.ActionLink("Comment Details", "CommentDetails", new { commentId = status.CommentId })</td>
+                <td></td>
+            </tr>
+        }
+    </table>
+}
+
+
+<p>
+    @Html.ActionLink("Back to the list of all tasks", "ListAllTasks")
+</p>

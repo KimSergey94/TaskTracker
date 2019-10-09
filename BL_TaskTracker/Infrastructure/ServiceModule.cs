@@ -3,7 +3,7 @@ using DAL_TaskTracker.Repositories.Interfaces;
 using Ninject.Modules;
 
 
-namespace BL_TaskTracker.Infrastructure
+namespace BLL_TaskTracker.Infrastructure
 {
     public class ServiceModule : NinjectModule
     {

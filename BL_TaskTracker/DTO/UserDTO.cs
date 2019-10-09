@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DAL_TaskTracker.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace BLL_TaskTracker.DTO
 {
@@ -10,7 +11,6 @@ namespace BLL_TaskTracker.DTO
         public string Email { get; set; }
         public string Password { get; set; }
         public int RoleId { get; set; }
-        public virtual RoleDTO Role { get; set; }
 
     }
 }

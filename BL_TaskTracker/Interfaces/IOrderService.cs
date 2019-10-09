@@ -12,8 +12,11 @@ namespace BLL_TaskTracker.Interfaces
         void AddAdmin(AdminDTO adminDTO);
         void AddUser(UserDTO userDTO);
         void AddClient(ClientDTO clientDTO);
-
+        void CreateStatus(StatusDTO statusDTO);
         string GetUserRoleName(int roleId);
+        TaskDTO GetTasksWithIncludedStatuses(TaskDTO task);
+
+
 
         List<UserDTO> GetUsers();//
         List<AdminDTO> GetAdmins();//
@@ -23,7 +26,7 @@ namespace BLL_TaskTracker.Interfaces
         List<ManagerDTO> GetManagers();//
 
         List<TaskDTO> GetTasks();//
-        List<StatusDTO> GetStatusReports();
+        List<StatusDTO> GetStatuses();
         List<CommentDTO> GetComments();
         List<RoleDTO> GetRoles();
         void Dispose();

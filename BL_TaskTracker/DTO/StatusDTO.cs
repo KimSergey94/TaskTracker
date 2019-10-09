@@ -7,7 +7,6 @@ namespace BLL_TaskTracker.DTO
         public int StatusId { get; set; }
 
         public int TaskId { get; set; }
-        public virtual TaskDTO Task { get; set; }
 
         public string Message { get; set; }
         public bool IsCompleted { get; set; }

@@ -1,21 +1,35 @@
 ﻿@model TaskTracker.Models.TaskVM
 
 
-<dl class="=" dl-horizontal">
-    @using (Html.BeginForm())
-    {
-        
-        <dt>@Html.DisplayNameFor(model => model.ManagerId)</dt>
-        <dd> @Html.DisplayFor(model => model.ManagerId)</dd>
+    <dl class="=" dl-horizontal">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <dt>@Html.DisplayNameFor(model => model.IsCompleted)</dt>
-        <dd> @Html.DisplayFor(model => model.IsCompleted)</dd>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <dt>@Html.DisplayNameFor(model => model.TaskDefinition)</dt>
-        <dd> @Html.DisplayFor(model => model.TaskDefinition)</dd>
+            <dt>@Html.DisplayNameFor(model => model.NumberOfSteps)</dt>
+            <dd> @Html.EditorFor(model => model.NumberOfSteps)</dd>
+            @Html.ValidationMessageFor(model => model.NumberOfSteps, "", new { @class = "text-danger" })
 
-        <dd>
-            <input type="submit" value="Create Task">
-        </dd>
-    }
-</dl>
+
+            <dt>@Html.DisplayNameFor(model => model.IsCompleted)</dt>
+            <dd> @Html.EditorFor(model => model.IsCompleted)</dd>
+            @Html.ValidationMessageFor(model => model.IsCompleted, "", new { @class = "text-danger" })
+
+            <dt>@Html.DisplayNameFor(model => model.TaskDefinition)</dt>
+            <dd>@Html.EditorFor(model => model.TaskDefinition)</dd>
+            @Html.ValidationMessageFor(model => model.TaskDefinition, "", new { @class = "text-danger" })
+
+
+            var employees = (IEnumerable<SelectListItem>)TempData["Employees"];
+
+            <dt> Pick an employee to whom you want to assign the task:</dt>
+            <dd> @Html.DropDownListFor(m => m.EmployeeId, employees)</dd>
+            @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+
+            <dd>
+                <input type="submit" value="Create Task">
+            </dd>
+        }
+    </dl>

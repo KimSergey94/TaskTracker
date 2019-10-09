@@ -1,5 +1,6 @@
 ﻿
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TaskTracker.Models
@@ -22,6 +23,7 @@ namespace TaskTracker.Models
 
 
         public int UserId { get; set; }
-        public virtual UserVM User { get; set; }
+
+        public virtual ICollection<TaskVM> Tasks { get; set; }
     }
 }

@@ -113,7 +113,7 @@ namespace DAL_TaskTracker.Repositories
             }
         }
 
-        public IRepository<Status> StatusReports
+        public IRepository<Status> Statuses
         {
             get
             {

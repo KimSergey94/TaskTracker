@@ -4,7 +4,7 @@ using Ninject.Modules;
 
 namespace TaskTracker.Util
 {
-    public class TaskModule : NinjectModule
+    public class OrderModule : NinjectModule
     {
         public override void Load()
         {

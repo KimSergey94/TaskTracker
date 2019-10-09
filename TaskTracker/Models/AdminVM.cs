@@ -10,6 +10,5 @@ namespace TaskTracker.Models
 
 
         public int UserId { get; set; }
-        public virtual UserVM User { get; set; }
     }
 }

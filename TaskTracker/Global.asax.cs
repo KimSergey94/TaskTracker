@@ -1,4 +1,4 @@
-﻿using BL_TaskTracker.Infrastructure;
+﻿using BLL_TaskTracker.Infrastructure;
 using DAL_TaskTracker.EF;
 using Ninject;
 using Ninject.Modules;
@@ -33,14 +33,12 @@ namespace TaskTracker
             ModelValidatorProviders.Providers.Clear();
 
 
-            NinjectModule orderModule = new TaskModule();
+            NinjectModule orderModule = new OrderModule();
             NinjectModule serviceModule = new ServiceModule("TaskTrackerDb");
             var kernel = new StandardKernel(orderModule, serviceModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
 
             
-            //TaskTrackerContext.Initialize();
-
         }
     }
 }

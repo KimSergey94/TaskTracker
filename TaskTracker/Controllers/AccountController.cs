@@ -33,6 +33,18 @@ namespace TaskTracker.Controllers
                     Session["Id"] = user.UserId;
                     Session["Role"] = orderService.GetUserRoleName(user.RoleId);
 
+                    //AdminVM admin = new AdminVM();
+                    //ManagerVM manager = new ManagerVM();
+                    //EmployeeVM employee = new EmployeeVM();
+                    //ClientVM client = new ClientVM();
+                    //RoleDTO role = orderService.GetRoles().Where(roleId => roleId.RoleId == Convert.ToInt32(Session["Role"])).FirstOrDefault();
+
+                    if (Session["Role"].ToString() == "manager")
+                    {
+                        Session["ManagerId"] = orderService.GetManagers().Find(empId => empId.EmployeeId ==
+                                        (orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId)).ManagerId;
+                    }
+
                     FormsAuthentication.SetAuthCookie(model.Email, true);
                     return RedirectToAction("Index", "Home");
                 }
@@ -169,6 +181,10 @@ namespace TaskTracker.Controllers
                         Session["Email"] = user.Email;
                         Session["Id"] = user.UserId;
                         Session["Role"] = orderService.GetUserRoleName(user.RoleId);
+
+                        Session["ManagerId"] = orderService.GetManagers().Find(empId => empId.EmployeeId ==
+                                            (orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId)).ManagerId;
+                        
                         FormsAuthentication.SetAuthCookie(model.Email, true);
                         return RedirectToAction("Index", "Home");
                     }

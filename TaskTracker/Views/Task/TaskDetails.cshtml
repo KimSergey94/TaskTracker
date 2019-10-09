@@ -1,0 +1,92 @@
+﻿@model TaskTracker.Models.TaskVM
+@{
+    ViewBag.Title = "Task Details";
+}
+
+<h2>Task Details</h2>
+
+
+<table class="table">
+
+
+    <tr>
+        <th>Task Id</th>
+        <th>Manager Id</th>
+        <th>Employee Id</th>
+        <th>Number of steps</th>
+        <th>Task Definition</th>
+
+        @if (Session["Role"] != null)
+        {
+            if (Session["Role"].ToString() == "manager" || Session["Role"].ToString() == "employee")
+            {
+                <th>Add Status</th>
+            }
+        }
+
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.TaskId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.ManagerId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.EmployeeId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.NumberOfSteps)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.TaskDefinition)
+        </td>
+
+        @if (Session["Role"] != null)
+        {
+            if (Session["Role"].ToString() == "manager" || Session["Role"].ToString() == "employee")
+            {
+                <td>@Html.ActionLink("Add Status", "CreateStatus", new { taskId = Model.TaskId })</td>
+            }
+        }
+
+    </tr>
+</table>
+
+@if (Model.Statuses.Count > 0)
+{
+    <table class="table">
+        <tr>
+            <th>Statuses</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <th>Status Id</th>
+            <th>Message</th>
+            <th>Is Completed</th>
+            <th>Details</th>
+            <th></th>
+
+        </tr>
+
+        @foreach (var status in Model.Statuses)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => status.StatusId)</td>
+                <td>@Html.DisplayFor(modelItem => status.Message)</td>
+                <td>@Html.DisplayFor(modelItem => status.IsCompleted)</td>
+                <td>@Html.ActionLink("Status Details", "StatusDetails", new { statusId = status.StatusId })</td>
+                <td></td>
+            </tr>
+        }
+    </table>
+}
+
+<p>
+    @Html.ActionLink("Back to the list of all tasks", "ListAllTasks")
+</p>

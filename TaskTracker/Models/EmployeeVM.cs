@@ -26,7 +26,6 @@ namespace TaskTracker.Models
         public int Salary { get; set; }
 
         public int UserId { get; set; }
-        public virtual UserVM User { get; set; }
 
         public virtual ICollection<TaskVM> Tasks { get; set; }
     }

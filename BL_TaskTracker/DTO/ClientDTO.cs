@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BLL_TaskTracker.DTO
 {
@@ -18,6 +19,7 @@ namespace BLL_TaskTracker.DTO
 
 
         public int UserId { get; set; }
-        public virtual UserDTO User { get; set; }
+
+        public virtual ICollection<TaskDTO> Tasks { get; set; }
     }
 }

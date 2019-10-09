@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BLL_TaskTracker.DTO;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TaskTracker.Models
@@ -9,19 +10,19 @@ namespace TaskTracker.Models
         public int TaskId { get; set; }
 
         public bool IsCompleted { get; set; }
+        [Required]
         public string TaskDefinition { get; set; }
 
+        [Required]
         public int NumberOfSteps { get; set; }
 
-
+        [Required]
         public int ManagerId { get; set; }
-        public virtual ManagerVM Manager { get; set; }
-
+        [Required]
         public int EmployeeId { get; set; }
-        public virtual EmployeeVM Employee { get; set; }
 
+        public int ClientId { get; set; }
 
-        public virtual ICollection<StatusVM> Statuses { get; set; }
-    
+        public virtual ICollection<StatusDTO> Statuses { get; set; }
     }
 }

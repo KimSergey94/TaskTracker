@@ -1,0 +1,32 @@
+﻿@model TaskTracker.Models.CommentVM
+@{
+    ViewBag.Title = "Comment Details";
+}
+
+<h2>Task Details </h2>
+
+
+<table class="table">
+
+    <tr>
+        <th>Comment Id</th>
+        <th>Status Id</th>
+        <th>Message</th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.CommentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.StatusId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.Message)
+        </td>
+    </tr>
+</table>
+
+<p>
+    @Html.ActionLink("Back to the list of all tasks", "ListAllTasks")
+</p>

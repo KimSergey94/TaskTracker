@@ -170,7 +170,7 @@
     <Compile Include="Models\UserVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomRoleProvider.cs" />
-    <Compile Include="Util\TaskModule.cs" />
+    <Compile Include="Util\OrderModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -205,9 +205,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\ListAllTasks.cshtml" />
+    <Content Include="Views\Task\ListAllTasks.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\CreateTask.cshtml" />
     <Content Include="Views\Home\Confirm.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -223,6 +222,12 @@
     <Content Include="Views\Home\ListAllEmployees.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Task\CreateTask.cshtml" />
+    <Content Include="Views\Task\EditTask.cshtml" />
+    <Content Include="Views\Task\DeleteTask.cshtml" />
+    <Content Include="Views\Task\TaskDetails.cshtml" />
+    <Content Include="Views\Task\StatusDetails.cshtml" />
+    <Content Include="Views\Task\CommentDetails.cshtml" />
+    <Content Include="Views\Task\CreateStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
