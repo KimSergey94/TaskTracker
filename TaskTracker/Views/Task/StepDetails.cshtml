@@ -1,16 +1,16 @@
-﻿@model TaskTracker.Models.StatusVM
+﻿@model TaskTracker.Models.StepVM
 @{
-    ViewBag.Title = "Status Details";
+    ViewBag.Title = "Step Details";
 }
 
-<h2>Status Details</h2>
+    <h2>Step Details</h2>
 
 
 <table class="table">
 
 
     <tr>
-        <th>Status Id</th>
+        <th>Step Id</th>
         <th>Task Id</th>
         <th>Message</th>
         <th>Is Completed</th>
@@ -27,7 +27,7 @@
 
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => modelItem.StatusId)
+            @Html.DisplayFor(modelItem => modelItem.StepId)
         </td>
         <td>
             @Html.DisplayFor(modelItem => modelItem.TaskId)
@@ -43,7 +43,7 @@
         {
             if (Session["Role"].ToString() == "manager" || Session["Role"].ToString() == "employee")
             {
-                <td>@Html.ActionLink("Add Comment", "CreateComment", new { statusId = Model.StatusId })</td>
+                <td>@Html.ActionLink("Add Comment", "CreateComment", new { statusId = Model.StepId })</td>
             }
         }
 
@@ -62,19 +62,19 @@
 
         <tr>
             <th>Comment Id</th>
-            <th>Status Id</th>
+            <th>Step Id</th>
             <th>Message</th>
             <th></th>
 
         </tr>
 
-        @foreach (var status in Model.Comments)
+        @foreach (var comment in Model.Comments)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => status.CommentId)</td>
-                <td>@Html.DisplayFor(modelItem => status.StatusId)</td>
-                <td>@Html.DisplayFor(modelItem => status.Message)</td>
-                <td>@Html.ActionLink("Comment Details", "CommentDetails", new { commentId = status.CommentId })</td>
+                <td>@Html.DisplayFor(modelItem => comment.CommentId)</td>
+                <td>@Html.DisplayFor(modelItem => comment.StepId)</td>
+                <td>@Html.DisplayFor(modelItem => comment.Message)</td>
+                <td>@Html.ActionLink("Comment Details", "CommentDetails", new { commentId = comment.CommentId })</td>
                 <td></td>
             </tr>
         }

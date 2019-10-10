@@ -21,7 +21,7 @@ namespace TaskTracker
         {
 
             System.Data.Entity.Database.SetInitializer<TaskTrackerContext>(new TaskTrackerDbInitializer());
-            var db = new TaskTrackerContext("TaskTrackerDb");
+            var db = new TaskTrackerContext("TaskTrackerContext");
             db.Database.Initialize(true);
 
             AreaRegistration.RegisterAllAreas();
@@ -34,7 +34,7 @@ namespace TaskTracker
 
 
             NinjectModule orderModule = new OrderModule();
-            NinjectModule serviceModule = new ServiceModule("TaskTrackerDb");
+            NinjectModule serviceModule = new ServiceModule("TaskTrackerContext");
             var kernel = new StandardKernel(orderModule, serviceModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
 

@@ -10,8 +10,9 @@
 
     <tr>
         <th>Comment Id</th>
-        <th>Status Id</th>
+        <th>Step Id</th>
         <th>Message</th>
+        <th></th>
     </tr>
 
     <tr>
@@ -19,11 +20,12 @@
             @Html.DisplayFor(modelItem => modelItem.CommentId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => modelItem.StatusId)
+            @Html.DisplayFor(modelItem => modelItem.StepId)
         </td>
         <td>
             @Html.DisplayFor(modelItem => modelItem.Message)
         </td>
+        <td>@Html.ActionLink("Delete", "DeleteComment", new { commentId = Model.CommentId })</td>
     </tr>
 </table>
 

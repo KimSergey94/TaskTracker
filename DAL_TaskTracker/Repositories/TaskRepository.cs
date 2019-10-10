@@ -25,6 +25,8 @@ namespace DAL_TaskTracker.Repositories
             Task item = db.Tasks.Find(id);
             if (item != null)
                 db.Tasks.Remove(item);
+
+            db.SaveChanges();
         }
 
         public List<Task> Find(Func<Task, bool> predicate)
@@ -45,6 +47,7 @@ namespace DAL_TaskTracker.Repositories
         public void Update(Task item)
         {
             db.Entry(item).State = EntityState.Modified;
+            db.SaveChanges();
         }
 
     }

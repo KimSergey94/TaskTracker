@@ -28,6 +28,8 @@ namespace TaskTracker.Controllers
         }
 
 
+        #region Tasks
+
         //[Authorize(Roles = "admin")]
         public ActionResult ListAllTasks()
         {
@@ -39,55 +41,33 @@ namespace TaskTracker.Controllers
             return View(tasks);
         }
 
-        [Authorize(Roles = "manager, employee")]
-        public ActionResult CreateStatus(int taskId)
-        {
-            TempData["TaskId"] = taskId;
-            return View();
-        }
 
         [Authorize(Roles = "manager, employee")]
-        [HttpPost]
-        public ActionResult CreateStatus(StatusVM status)
+        public ActionResult TaskDetails(int taskId)
         {
-
-            //if (Session["Role"].ToString() == "manager")
-            //{
-            //    Session["ManagerId"] = orderService.GetManagers().Find(empId => empId.EmployeeId ==
-            //                    (orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId)).ManagerId;
-            //}
-
-            if (ModelState.IsValid)
+            if (taskId == null)
             {
-                try
-                {
-                    int taskId = Convert.ToInt32(TempData["TaskId"]);
-                    if (taskId == 0 || taskId == null)  // null??
-                    {
-                        return HttpNotFound();
-                    }
-                    var statusDTO = new StatusDTO
-                    {
-                        IsCompleted = status.IsCompleted,
-                        TaskId = status.TaskId,
-                        Message = status.Message,
-                    };
-                    orderService.CreateStatus(statusDTO);
-                    return RedirectToAction("Index", "Home");
-                }
-                catch (ValidationException ex)
-                {
-                    ModelState.AddModelError(ex.Property, ex.Message);
-                }
+                return HttpNotFound();
             }
-            //TempData["TaskId"] = taskId; status?
-            return View();
+
+            TaskDTO task = orderService.GetTasks().FirstOrDefault(t => t.TaskId == taskId);
+            if (task == null)
+            {
+                return HttpNotFound();
+            }
+            task.Steps = orderService.GetSteps().Where(id => id.TaskId == taskId).ToList();
+            ///////////
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskVM>()).CreateMapper();
+            var model = mapper.Map<TaskDTO, TaskVM>(task);
+
+            return View(model);
         }
 
         [Authorize(Roles = "manager")]
         public ActionResult CreateTask()
         {
             TempData["Employees"] = new SelectList(orderService.GetEmployees().ToArray(), "EmployeeId", "FirstName", "1");
+            TempData["Clients"] = new SelectList(orderService.GetClients().ToArray(), "ClientId", "CompanyName", "1");
             return View();
         }
 
@@ -107,13 +87,14 @@ namespace TaskTracker.Controllers
                     var taskDTO = new TaskDTO
                     {
                         IsCompleted = task.IsCompleted,
+                        ClientId = task.ClientId,
                         ManagerId = managerId,
                         TaskDefinition = task.TaskDefinition,
                         EmployeeId = task.EmployeeId,
                         NumberOfSteps = task.NumberOfSteps
 
                     };
-                    orderService.CreateTask(taskDTO);
+                    orderService.AddTask(taskDTO);
                     return RedirectToAction("Index", "Home");
                 }
                 catch (ValidationException ex)
@@ -125,65 +106,197 @@ namespace TaskTracker.Controllers
             return View();
         }
 
-        public ActionResult EditTask(int taskId)
+        public ActionResult EditTask(int? taskId)
         {
+            TaskDTO taskDTO = orderService.GetTasks().FirstOrDefault(taskID => taskID.TaskId == taskId);
+            //taskDTO = orderService.GetTasksWithIncludedSteps(taskDTO);
+
+            SelectList emp = new SelectList(orderService.GetEmployees(), "EmployeeId", "FirstName", 1);
+            ViewBag.Employees = emp;
+
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskVM>()).CreateMapper();
-            var task = mapper.Map<TaskDTO, TaskVM>(orderService.GetTasks().FirstOrDefault(id => id.TaskId == taskId));
-            return View();
+            var model = mapper.Map<TaskDTO, TaskVM>(taskDTO);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditTask(TaskVM taskVM)
+        {
+            var dbTask = orderService.GetTasks().FirstOrDefault(x => x.TaskId == taskVM.TaskId);
+            dbTask.ClientId = taskVM.ClientId;
+            dbTask.ManagerId = taskVM.ManagerId;
+            dbTask.EmployeeId = taskVM.EmployeeId;
+            dbTask.IsCompleted = taskVM.IsCompleted;
+            dbTask.NumberOfSteps = taskVM.NumberOfSteps;
+            dbTask.TaskDefinition = taskVM.TaskDefinition;
+            dbTask.Steps = taskVM.Steps;
+
+            orderService.EditTask(dbTask);
+
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult DeleteTask(int taskId)
         {
+            var task = orderService.GetTasks().FirstOrDefault(taskID => taskID.TaskId == taskId);
+            task = orderService.GetTaskWithIncludedSteps(task);
+
+            TempData["Steps"] = new SelectList(task.Steps.ToArray(), "StepId", "Message", "1");
+
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskVM>()).CreateMapper();
-            var task = mapper.Map<TaskDTO, TaskVM>(orderService.GetTasks().FirstOrDefault(id => id.TaskId == taskId));
+            var taskVM = mapper.Map<TaskDTO, TaskVM>(task);
+            return View(taskVM);
+        }
+        [HttpPost]
+        public ActionResult DeleteTask(TaskVM task)
+        {
+            var taskDTO = orderService.GetTasks().FirstOrDefault(taskID => taskID.TaskId == task.TaskId);
+            orderService.DeleteTask(taskDTO);
+
+            if (orderService.GetTasks().Exists(x => x.TaskId == task.TaskId) == false)
+            {
+                return RedirectToAction("ListAllTasks", "Task");
+            }
+            else
+            {
+                ViewBag.Message = "The task has not been deleted successfully.";
+                ViewBag.Title = "Deletion error.";
+                return View("Error");
+            }
+        }
+
+        #endregion Tasks
+
+
+        #region Steps
+
+
+        [Authorize(Roles = "manager, employee")]
+        public ActionResult StepDetails(int stepId)
+        {
+            if (stepId == null)
+            {
+                return HttpNotFound();
+            }
+
+            StepDTO step = orderService.GetSteps().FirstOrDefault(t => t.StepId == stepId);
+            if (step == null)
+            {
+                return HttpNotFound();
+            }
+            step.Comments = orderService.GetComments().Where(id => id.StepId == stepId).ToList();
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<StepDTO, StepVM>()
+            .ForMember(dest => dest.Comments, opt => opt.MapFrom(st => st.Comments))
+            ).CreateMapper();
+            var model = mapper.Map<StepDTO, StepVM>(step);
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "manager, employee")]
+        public ActionResult CreateStep(int taskId)
+        {
+            TempData["TaskId"] = taskId;
             return View();
         }
 
         [Authorize(Roles = "manager, employee")]
-        public ActionResult TaskDetails(int taskId)
+        [HttpPost]
+        public ActionResult CreateStep(StepVM step)
         {
-            if (taskId == null)
-            {
-                return HttpNotFound();
-            }
 
-            TaskDTO task = orderService.GetTasks().FirstOrDefault(t => t.TaskId == taskId);
-            if (task == null)
+            //if (Session["Role"].ToString() == "manager")
+            //{
+            //    Session["ManagerId"] = orderService.GetManagers().Find(empId => empId.EmployeeId ==
+            //                    (orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId)).ManagerId;
+            //}
+
+            if (ModelState.IsValid)
             {
-                return HttpNotFound();
+                try
+                {
+                    int taskId = Convert.ToInt32(TempData["TaskId"]);
+                    if (taskId == 0 || taskId == null)  // null??
+                    {
+                        return HttpNotFound();
+                    }
+                    var stepDTO = new StepDTO
+                    {
+                        IsCompleted = step.IsCompleted,
+                        TaskId = step.TaskId,
+                        Message = step.Message,
+                    };
+                    orderService.AddStep(stepDTO);
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (ValidationException ex)
+                {
+                    ModelState.AddModelError(ex.Property, ex.Message);
+                }
             }
-            task.Statuses = orderService.GetStatuses().Where(id => id.TaskId == taskId).ToList();
-            
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskVM>()
-            .ForMember(dest => dest.Statuses, opt => opt.MapFrom(st => st.Statuses))
-            ).CreateMapper();
-            var model = mapper.Map<TaskDTO, TaskVM>(task);
+            return View();
+        }
+
+        public ActionResult EditStep(int? stepId)
+        {
+            StepDTO stepDTO = orderService.GetSteps().FirstOrDefault(stepID => stepID.StepId == stepId);
+            //taskDTO = orderService.GetTasksWithIncludedSteps(taskDTO);
+
+            SelectList cmnts = new SelectList(orderService.GetEmployees(), "EmployeeId", "FirstName", 1);
+            ViewBag.Comments = cmnts;
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<StepDTO, StepVM>()).CreateMapper();
+            var model = mapper.Map<StepDTO, StepVM>(stepDTO);
 
             return View(model);
         }
 
-        [Authorize(Roles = "manager, employee")]
-        public ActionResult StatusDetails(int statusId)
+        [HttpPost]
+        public ActionResult EditStep(StepVM stepVM)
         {
-            if (statusId == null)
-            {
-                return HttpNotFound();
-            }
+            var dbStep = orderService.GetSteps().FirstOrDefault(x => x.StepId == stepVM.StepId);
+            dbStep.Message = stepVM.Message;
+            dbStep.IsCompleted = stepVM.IsCompleted;
+            dbStep.Comments = stepVM.Comments;
 
-            StatusDTO status = orderService.GetStatuses().FirstOrDefault(t => t.StatusId == statusId);
-            if (status == null)
-            {
-                return HttpNotFound();
-            }
-            status.Comments = orderService.GetComments().Where(id => id.StatusId == statusId).ToList();
+            orderService.EditStep(dbStep);
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<StatusDTO, StatusVM>()
-            .ForMember(dest => dest.Comments, opt => opt.MapFrom(st => st.Comments))
-            ).CreateMapper();
-            var model = mapper.Map<StatusDTO, StatusVM>(status);
-
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult DeleteStep(int stepId)
+        {
+            var step = orderService.GetSteps().FirstOrDefault(taskID => taskID.TaskId == stepId);
+            step = orderService.GetStepWithIncludedComments(step);
+
+            TempData["Comments"] = new SelectList(step.Comments.ToArray(), "CommentId", "Message", "1");
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<StepDTO, StepVM>()).CreateMapper();
+            var taskVM = mapper.Map<StepDTO, StepVM>(step);
+            return View(taskVM);
+        }
+        [HttpPost]
+        public ActionResult DeleteStep(TaskVM task)
+        {
+            var taskDTO = orderService.GetTasks().FirstOrDefault(taskID => taskID.TaskId == task.TaskId);
+            orderService.DeleteTask(taskDTO);
+
+            if (orderService.GetTasks().Exists(x => x.TaskId == task.TaskId) == false)
+            {
+                return RedirectToAction("ListAllTasks", "Task");
+            }
+            else
+            {
+                ViewBag.Message = "The task has not been deleted successfully.";
+                ViewBag.Title = "Deletion error.";
+                return View("Error");
+            }
+        }
+
+        #endregion Steps
+
 
 
         [Authorize(Roles = "manager, employee")]
@@ -206,28 +319,8 @@ namespace TaskTracker.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult EditTask(int? taskId)
-        {
-            TaskDTO task = orderService.GetTasks().FirstOrDefault(taskID => taskID.TaskId == taskId);
-            task = orderService.GetTasksWithIncludedStatuses(task);
 
-            //TempData["Employees"] =
-            //if (emp != null)
-            SelectList emp = new SelectList(orderService.GetEmployees(), "EmployeeId", "FirstName", 1);
-            ViewBag.Employees = emp;//Statuses().Where(x => x.TaskId == task.TaskId);
-            
-            return View(task);
+
         
-        }
-
-
-        //[HttpPost]
-        //public ActionResult EditEmp(TaskVM emp)
-        //{
-        //    db.Entry(emp).State = EntityState.Modified;
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
     }
 }

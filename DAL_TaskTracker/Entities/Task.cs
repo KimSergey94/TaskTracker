@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL_TaskTracker.Entities
 {
@@ -16,7 +17,6 @@ namespace DAL_TaskTracker.Entities
         public int EmployeeId { get; set; }
         public int ClientId { get; set; }
 
-
-        public virtual ICollection<Status> Statuses { get; set; }
+        //public virtual ICollection<Step> Steps { get; set; }
     }
 }

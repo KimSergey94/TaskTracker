@@ -28,6 +28,12 @@
             <dd> @Html.DropDownListFor(m => m.EmployeeId, employees)</dd>
             @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
 
+            var clients = (IEnumerable<SelectListItem>)TempData["Clients"];
+
+            <dt> Pick a client that requested the task:</dt>
+            <dd> @Html.DropDownListFor(m => m.ClientId, clients)</dd>
+            @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+
             <dd>
                 <input type="submit" value="Create Task">
             </dd>

@@ -59,7 +59,7 @@
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\Manager.cs" />
-    <Compile Include="Entities\Status.cs" />
+    <Compile Include="Entities\Step.cs" />
     <Compile Include="Entities\Task.cs" />
     <Compile Include="Repositories\AdminRepository.cs" />
     <Compile Include="Repositories\ClientRepository.cs" />
@@ -71,7 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ManagerRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
-    <Compile Include="Repositories\StatusRepository.cs" />
+    <Compile Include="Repositories\StepRepository.cs" />
     <Compile Include="Repositories\TaskRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>

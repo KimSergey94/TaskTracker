@@ -17,6 +17,7 @@ namespace BLL_TaskTracker.DTO
         public int ClientId { get; set; }
 
 
-        public virtual ICollection<StatusDTO> Statuses { get; set; }
+        public virtual ICollection<StepDTO> Steps { get; set; }
+        public virtual ICollection<EmployeeDTO> Employees { get; set; }   //
     }
 }

@@ -23,6 +23,6 @@ namespace TaskTracker.Models
 
         public int ClientId { get; set; }
 
-        public virtual ICollection<StatusDTO> Statuses { get; set; }
+        public virtual ICollection<StepDTO> Steps { get; set; }
     }
 }

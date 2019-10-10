@@ -1,5 +1,6 @@
 ﻿using DAL_TaskTracker.Entities;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BLL_TaskTracker.DTO
 {
@@ -11,6 +12,5 @@ namespace BLL_TaskTracker.DTO
         public string Email { get; set; }
         public string Password { get; set; }
         public int RoleId { get; set; }
-
     }
 }

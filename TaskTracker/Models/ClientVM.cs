@@ -24,6 +24,6 @@ namespace TaskTracker.Models
 
         public int UserId { get; set; }
 
-        public virtual ICollection<TaskVM> Tasks { get; set; }
+        //public virtual ICollection<TaskVM> Tasks { get; set; }
     }
 }

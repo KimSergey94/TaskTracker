@@ -10,43 +10,44 @@ using System.Threading.Tasks;
 
 namespace DAL_TaskTracker.Repositories
 {
-    public class StatusRepository : IRepository<Status>
+    public class StepRepository : IRepository<Step>
     {
         private TaskTrackerContext db;
-        public StatusRepository(TaskTrackerContext context)
+        public StepRepository(TaskTrackerContext context)
         {
             this.db = context;
         }
-        public void Create(Status item)
+        public void Create(Step item)
         {
             db.Statuses.Add(item);
         }
 
         public void Delete(int id)
         {
-            Status item = db.Statuses.Find(id);
+            Step item = db.Statuses.Find(id);
             if (item != null)
                 db.Statuses.Remove(item);
         }
 
-        public List<Status> Find(Func<Status, bool> predicate)
+        public List<Step> Find(Func<Step, bool> predicate)
         {
             return db.Statuses.Where(predicate).ToList();
         }
 
-        public Status Get(int id)
+        public Step Get(int id)
         {
             return db.Statuses.Find(id);
         }
 
-        public List<Status> GetAll()
+        public List<Step> GetAll()
         {
             return db.Statuses.ToList();
         }
 
-        public void Update(Status item)
+        public void Update(Step item)
         {
             db.Entry(item).State = EntityState.Modified;
+            db.SaveChanges();
         }
     }
 }

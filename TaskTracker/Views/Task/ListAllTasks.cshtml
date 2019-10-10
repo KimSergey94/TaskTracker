@@ -10,7 +10,16 @@
             @Html.DisplayNameFor(model => model.TaskId)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.ClientId)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.ManagerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfSteps)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TaskDefinition)
@@ -28,7 +37,16 @@
         @Html.DisplayFor(modelItem => item.TaskId)
     </td>
     <td>
+        @Html.DisplayFor(modelItem => item.ClientId)
+    </td>
+    <td>
         @Html.DisplayFor(modelItem => item.ManagerId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EmployeeId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NumberOfSteps)
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.TaskDefinition)
@@ -36,6 +54,7 @@
     <td>
         @Html.DisplayFor(modelItem => item.IsCompleted)
     </td>
+    
     @if (Session["Role"] != null)
     {
         if (Session["Role"].ToString() == "manager" || Session["Role"].ToString() == "employee")
@@ -47,7 +66,7 @@
             </td>
         }
     }
-    
+
 </tr>
     }
 

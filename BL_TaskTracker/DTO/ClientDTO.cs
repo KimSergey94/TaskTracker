@@ -20,6 +20,6 @@ namespace BLL_TaskTracker.DTO
 
         public int UserId { get; set; }
 
-        public virtual ICollection<TaskDTO> Tasks { get; set; }
+        //public virtual ICollection<TaskDTO> Tasks { get; set; }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace BLL_TaskTracker.DTO
 {
-    public class StatusDTO
+    public class StepDTO
     {
-        public int StatusId { get; set; }
+        public int StepId { get; set; }
 
         public int TaskId { get; set; }
 

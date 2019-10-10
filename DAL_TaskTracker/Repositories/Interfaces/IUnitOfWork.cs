@@ -11,7 +11,7 @@ namespace DAL_TaskTracker.Repositories.Interfaces
         IRepository<Employee> Employees { get; }
         IRepository<Manager> Managers { get; }
         IRepository<Task> Tasks { get; }
-        IRepository<Status> Statuses { get; }
+        IRepository<Step> Steps { get; }
         IRepository<Comment> Comments { get; }
         IRepository<Role> Roles { get; }
 

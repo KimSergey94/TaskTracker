@@ -38,7 +38,7 @@ namespace TaskTracker.Providers
         public override string[] GetRolesForUser(string username)
         {
             string[] roles = new string[] { };
-            using (TaskTrackerContext db = new TaskTrackerContext("TaskTrackerDb"))
+            using (TaskTrackerContext db = new TaskTrackerContext("TaskTrackerContext"))
             {
                 User user = db.Users.FirstOrDefault(u => u.Email == username);
                 if (user != null)
@@ -58,7 +58,7 @@ namespace TaskTracker.Providers
         public override bool IsUserInRole(string username, string roleName)
         {
             bool outputResult = false;
-            using (TaskTrackerContext db = new TaskTrackerContext("TaskTrackerDb"))
+            using (TaskTrackerContext db = new TaskTrackerContext("TaskTrackerContext"))
             {
                 User user = db.Users.FirstOrDefault(u => u.Email == username);
                 if (user != null)

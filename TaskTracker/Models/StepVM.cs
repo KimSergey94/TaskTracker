@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TaskTracker.Models
 {
-    public class StatusVM
+    public class StepVM
     {
         [Key]
-        public int StatusId { get; set; }
+        public int StepId { get; set; }
 
         public int TaskId { get; set; }
         public string Message { get; set; }

@@ -10,9 +10,7 @@ namespace TaskTracker.Models
     {
         [Key]
         public int RoleId { get; set; }
-        //public int UserId { get; set; }
-        //public virtual UserDTO UserDTO { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<UserVM> Users { get; set; }
+        //public virtual ICollection<UserVM> Users { get; set; }
     }
 }

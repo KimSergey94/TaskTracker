@@ -15,14 +15,14 @@ namespace DAL_TaskTracker.Repositories
         private EmployeeRepository employeeRepository;
         private ManagerRepository managerRepository;
         private TaskRepository taskRepository;
-        private StatusRepository statusRepository;
+        private StepRepository stepRepository;
         private CommentRepository commentRepository;
         private RoleRepository roleRepository;
 
 
         public EFUnitOfWork()
         {
-            db = new TaskTrackerContext("TaskTrackerDb");
+            db = new TaskTrackerContext("TaskTrackerContext");
         }
 
 
@@ -113,13 +113,13 @@ namespace DAL_TaskTracker.Repositories
             }
         }
 
-        public IRepository<Status> Statuses
+        public IRepository<Step> Steps
         {
             get
             {
-                if (statusRepository == null)
-                    statusRepository = new StatusRepository(db);
-                return statusRepository;
+                if (stepRepository == null)
+                    stepRepository = new StepRepository(db);
+                return stepRepository;
             }
         }
 

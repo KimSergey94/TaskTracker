@@ -13,7 +13,7 @@ namespace DAL_TaskTracker.EF
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Task> Tasks { get; set; }
-        public DbSet<Status> Statuses { get; set; }
+        public DbSet<Step> Statuses { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Role> Roles { get; set; }
 
@@ -31,7 +31,7 @@ namespace DAL_TaskTracker.EF
     }
 
 
-    public class TaskTrackerDbInitializer : DropCreateDatabaseAlways<TaskTrackerContext>
+    public class TaskTrackerDbInitializer : DropCreateDatabaseIfModelChanges<TaskTrackerContext>
     {
         protected override void Seed(TaskTrackerContext db)
         {
@@ -53,13 +53,11 @@ namespace DAL_TaskTracker.EF
             db.Employees.Add(new Employee { FirstName = "Marshal", LastName = "Houston", Country = "USA", Position = "JavaScript Developer", Salary = 60000 });
 
             db.Managers.Add(new Manager { EmployeeId = 1 });
-            //db.Managers.Add(new Manager { } );
-            //db.Managers.Add(new Manager { } );
 
-            db.Users.Add(new User { Email= "admin@ad.min", Password="admin@ad.min", RoleId = 1});
+            db.Users.Add(new User { Email = "admin@ad.min", Password = "admin@ad.min", RoleId = 1 });
             db.Admins.Add(new Admin { UserId = 1 });
 
-            db.Managers.Add( new Manager {  });
+            db.Managers.Add(new Manager { });
 
             db.Users.Add(new User { RoleId = 2, Email = "google@google.com", Password = "google.com" });
 
@@ -67,12 +65,12 @@ namespace DAL_TaskTracker.EF
             db.Users.Add(new User { RoleId = 4, Email = "techsupport@accenture.com", Password = "accenture.com" });
             db.Users.Add(new User { RoleId = 2, Email = "edward@gmail.com", Password = "edward" });
 
-            db.Comments.Add( new Comment { Message = "The task has been assigned", StatusId = 1});
-            db.Comments.Add( new Comment { Message = "The employee has received the task", StatusId = 1 });
-            db.Comments.Add( new Comment { Message = "The employee is working on the task", StatusId = 2 });
+            db.Comments.Add(new Comment { Message = "The task has been assigned", StepId = 1 });
+            db.Comments.Add(new Comment { Message = "The employee has received the task", StepId = 1 });
+            db.Comments.Add(new Comment { Message = "The employee is working on the task", StepId = 2 });
 
-            db.Statuses.Add(new Status { Message = "In progress", IsCompleted = false, TaskId = 1 });
-            db.Statuses.Add(new Status { Message = "In progress", IsCompleted = false, TaskId = 1 });
+            db.Statuses.Add(new Step { Message = "In progress", IsCompleted = false, TaskId = 1 });
+            db.Statuses.Add(new Step { Message = "In progress", IsCompleted = false, TaskId = 1 });
 
             db.Tasks.Add(new Task { IsCompleted = false, EmployeeId = 1, ManagerId = 1, NumberOfSteps = 6, TaskDefinition = "Create Web App" });
 

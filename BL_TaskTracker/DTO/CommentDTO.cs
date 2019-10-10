@@ -6,7 +6,7 @@ namespace BLL_TaskTracker.DTO
     {
         public int CommentId { get; set; }
 
-        public int StatusId { get; set; }
+        public int StepId { get; set; }
 
         public string Message { get; set; }
 
