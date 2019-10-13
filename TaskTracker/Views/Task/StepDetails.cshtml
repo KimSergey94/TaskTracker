@@ -15,7 +15,7 @@
         <th>Message</th>
         <th>Is Completed</th>
 
-        @if (Session["Role"].ToString() != null)
+        @if (Session["Role"] != null)
         {
             if (Session["Role"].ToString()  == "manager" || Session["Role"].ToString() == "employee")
             {
@@ -39,11 +39,11 @@
             @Html.DisplayFor(modelItem => modelItem.IsCompleted)
         </td>
 
-        @if (Session["Role"].ToString() != null)
+        @if (Session["Role"] != null)
         {
             if (Session["Role"].ToString() == "manager" || Session["Role"].ToString() == "employee")
             {
-                <td>@Html.ActionLink("Add Comment", "CreateComment", new { statusId = Model.StepId })</td>
+                <td>@Html.ActionLink("Add Comment", "CreateComment", new { stepId = Model.StepId })</td>
             }
         }
 
@@ -52,33 +52,45 @@
 
 @if (Model.Comments.Count > 0)
 {
-    <table class="table">
+<table class="table">
+    <tr>
+        <th>Comments</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    <tr>
+        <th>Comment Id</th>
+        <th>Step Id</th>
+        <th>Message</th>
+        <th></th>
+
+    </tr>
+    @foreach (var comment in Model.Comments)
+    {
         <tr>
-            <th>Comments</th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
 
-        <tr>
-            <th>Comment Id</th>
-            <th>Step Id</th>
-            <th>Message</th>
-            <th></th>
+            <td>@Html.DisplayFor(modelItem => comment.CommentId)</td>
+            <td>@Html.DisplayFor(modelItem => comment.StepId)</td>
+            <td>@Html.DisplayFor(modelItem => comment.Message)</td>
+            <td>
+                @if (Session["Role"] != null)
+                {
+                    if (Session["Role"].ToString() == "manager" || Session["Role"].ToString() == "employee")
+                    {
 
-        </tr>
+                        @Html.ActionLink("Details ", "CommentDetails", new { commentId = comment.CommentId })
+                    }
 
-        @foreach (var comment in Model.Comments)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => comment.CommentId)</td>
-                <td>@Html.DisplayFor(modelItem => comment.StepId)</td>
-                <td>@Html.DisplayFor(modelItem => comment.Message)</td>
-                <td>@Html.ActionLink("Comment Details", "CommentDetails", new { commentId = comment.CommentId })</td>
+                }
+            </td>
                 <td></td>
             </tr>
         }
-    </table>
+
+
+        </table>
 }
 
 

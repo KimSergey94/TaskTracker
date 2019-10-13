@@ -29,11 +29,7 @@ namespace BLL_TaskTracker.Services
         {
             var allTasks = database.Tasks.GetAll();
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Task, TaskDTO>()
-            .ForMember(dest => dest.IsCompleted, opt => opt.MapFrom(src => src.IsCompleted))
-            .ForMember(dest => dest.ManagerId, opt => opt.MapFrom(src => src.ManagerId))
-            .ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.TaskId))
-            ).CreateMapper();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Task, TaskDTO>()).CreateMapper();
             return mapper.Map<List<Task>, List<TaskDTO>>(allTasks);
         }
 
@@ -117,7 +113,26 @@ namespace BLL_TaskTracker.Services
 
             return step;
         }
-        
+
+        public List<EmployeeDTO> GetAllManagers()
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Employee, EmployeeDTO>()).CreateMapper();
+            List<Manager> dbManagers = database.Managers.GetAll();
+            List<Employee> dbEmployees = database.Employees.GetAll();
+            List<EmployeeDTO> managerList = new List<EmployeeDTO>();
+
+            foreach(Manager manager in dbManagers)
+            {
+                if (manager.EmployeeId != 0)
+                {
+                    managerList.Add(mapper.Map<Employee, EmployeeDTO>(dbEmployees.Find(x => x.EmployeeId == manager.EmployeeId)));
+                }
+            }
+
+            return (managerList); 
+        }
+
+
 
 
         public void AddTask(TaskDTO taskDTO)
@@ -170,7 +185,37 @@ namespace BLL_TaskTracker.Services
 
             database.Steps.Update(step);   /// /ds /a/d as/d/ as/d
         }
-        
+
+        public void DeleteStep(StepDTO stepDTO)
+        {
+            database.Steps.Delete(stepDTO.StepId);
+        }
+
+
+
+
+        public void AddComment(CommentDTO commentDTO)
+        {
+            Comment comment = new Comment
+            {
+                StepId = commentDTO.StepId,
+                Message = commentDTO.Message
+            };
+            database.Comments.Create(comment);
+            database.Save();
+        }
+        public void EditComment(CommentDTO commentDTO)
+        {
+            var comment = database.Comments.Find(x => x.CommentId == commentDTO.CommentId).Find(x => x.CommentId == commentDTO.CommentId);
+            comment.Message = commentDTO.Message;
+
+            database.Comments.Update(comment);  
+        }
+
+        public void DeleteComment(CommentDTO commentDTO)
+        {
+            database.Comments.Delete(commentDTO.CommentId);
+        }
 
 
 

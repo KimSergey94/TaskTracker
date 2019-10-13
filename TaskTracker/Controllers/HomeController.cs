@@ -29,19 +29,6 @@ namespace TaskTracker.Controllers
         }
 
 
-        
-
-        [Authorize(Roles = "admin")]
-        public ActionResult ListAllUsers()
-        {
-            ViewBag.Title = "All Users";
-
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, UserVM>()).CreateMapper();
-
-            var users = mapper.Map<List<UserDTO>, List<UserVM>>(orderService.GetUsers());
-            return View(users);
-        }
-
         [Authorize(Roles = "admin")]
         public ActionResult ListAllAdmins()
         {
@@ -53,13 +40,12 @@ namespace TaskTracker.Controllers
             return View(admins);
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, manager")]
         public ActionResult ListAllClients()
         {
             ViewBag.Title = "All Clients";
 
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientVM>()).CreateMapper();
-
             var clients = mapper.Map<List<ClientDTO>, List<ClientVM>>(orderService.GetClients());
             return View(clients);
         }
@@ -68,13 +54,17 @@ namespace TaskTracker.Controllers
         public ActionResult ListAllManagers()
         {
             ViewBag.Title = "All Managers";
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<EmployeeDTO, EmployeeVM>()).CreateMapper();
+            var managers = orderService.GetAllManagers();
+            List<EmployeeVM> result = new List<EmployeeVM>();
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ManagerDTO, ManagerVM>()).CreateMapper();
-
-            var clients = mapper.Map<List<ManagerDTO>, List<ManagerVM>>(orderService.GetManagers());
-            return View(clients);
+            foreach (EmployeeDTO manager in managers)
+            {
+                result.Add(mapper.Map<EmployeeDTO, EmployeeVM>(managers.Find(x => x.EmployeeId == manager.EmployeeId)));
+            }
+           
+            return View(result);
         }
-
 
         [Authorize(Roles = "admin, manager")]
         public ActionResult ListAllEmployees()
@@ -86,6 +76,19 @@ namespace TaskTracker.Controllers
             var clients = mapper.Map<List<EmployeeDTO>, List<EmployeeVM>>(orderService.GetEmployees());
             return View(clients);
         }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Title = "Please, feel free to call and send us emails ";
+            return View();
+        }
+
+        public ActionResult About()
+        {
+            ViewBag.Title = "About Us";
+            return View();
+        }
+
 
 
         protected override void Dispose(bool diposing)

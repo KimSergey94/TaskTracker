@@ -76,13 +76,24 @@
 
         @foreach (var status in Model.Steps)
         {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => status.StepId)</td>
-                <td>@Html.DisplayFor(modelItem => status.Message)</td>
-                <td>@Html.DisplayFor(modelItem => status.IsCompleted)</td>
-                <td>@Html.ActionLink("Step Details", "StepDetails", new { stepId = status.StepId })</td>
-                <td></td>
-            </tr>
+    <tr>
+        <td>@Html.DisplayFor(modelItem => status.StepId)</td>
+        <td>@Html.DisplayFor(modelItem => status.Message)</td>
+        <td>@Html.DisplayFor(modelItem => status.IsCompleted)</td>
+        <td>
+            @Html.ActionLink("Details ", "StepDetails", new { stepId = status.StepId })
+
+            @if (Session["Role"] != null)
+            {
+                if (Session["Role"].ToString() == "manager" || Session["Role"].ToString() == "employee")
+                {
+                @Html.ActionLink("Edit ", "EditStep", new { stepId = status.StepId })
+                @Html.ActionLink("Delete", "DeleteStep", new { stepId = status.StepId })
+                }
+            }
+            </td>
+            <td></td>
+        </tr>
         }
     </table>
 }

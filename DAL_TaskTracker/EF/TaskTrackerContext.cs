@@ -13,7 +13,7 @@ namespace DAL_TaskTracker.EF
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Task> Tasks { get; set; }
-        public DbSet<Step> Statuses { get; set; }
+        public DbSet<Step> Steps { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Role> Roles { get; set; }
 
@@ -69,8 +69,8 @@ namespace DAL_TaskTracker.EF
             db.Comments.Add(new Comment { Message = "The employee has received the task", StepId = 1 });
             db.Comments.Add(new Comment { Message = "The employee is working on the task", StepId = 2 });
 
-            db.Statuses.Add(new Step { Message = "In progress", IsCompleted = false, TaskId = 1 });
-            db.Statuses.Add(new Step { Message = "In progress", IsCompleted = false, TaskId = 1 });
+            db.Steps.Add(new Step { Message = "In progress", IsCompleted = false, TaskId = 1 });
+            db.Steps.Add(new Step { Message = "In progress", IsCompleted = false, TaskId = 1 });
 
             db.Tasks.Add(new Task { IsCompleted = false, EmployeeId = 1, ManagerId = 1, NumberOfSteps = 6, TaskDefinition = "Create Web App" });
 

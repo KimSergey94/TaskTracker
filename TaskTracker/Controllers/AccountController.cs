@@ -44,7 +44,10 @@ namespace TaskTracker.Controllers
                         Session["ManagerId"] = orderService.GetManagers().Find(empId => empId.EmployeeId ==
                                         (orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId)).ManagerId;
                     }
-
+                    if (Session["Role"].ToString() == "employee")
+                    {
+                        Session["EmployeeId"] = orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId;
+                    }
                     FormsAuthentication.SetAuthCookie(model.Email, true);
                     return RedirectToAction("Index", "Home");
                 }
@@ -76,6 +79,7 @@ namespace TaskTracker.Controllers
         }
 
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RegisterAdmin(AdminRegisterModel model)
@@ -131,6 +135,7 @@ namespace TaskTracker.Controllers
         }
 
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RegisterManager(ManagerRegisterModel model)
@@ -198,13 +203,14 @@ namespace TaskTracker.Controllers
         }
 
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, manager")]
         public ActionResult RegisterEmployee()
         {
             return View();
         }
 
 
+        [Authorize(Roles = "admin, manager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RegisterEmployee(EmployeeRegisterModel model)
@@ -247,6 +253,7 @@ namespace TaskTracker.Controllers
                         Session["Email"] = user.Email;
                         Session["Id"] = user.UserId;
                         Session["Role"] = orderService.GetUserRoleName(user.RoleId);
+                        Session["EmployeeId"] = orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId;
                         FormsAuthentication.SetAuthCookie(model.Email, true);
                         return RedirectToAction("Index", "Home");
                     }
@@ -260,13 +267,14 @@ namespace TaskTracker.Controllers
         }
 
 
-        [Authorize(Roles = "manager, admin")]
+        [Authorize(Roles = "admin")]
         public ActionResult RegisterClient()
         {
             return View();
         }
 
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RegisterClient(ClientRegisterModel model)
@@ -325,6 +333,8 @@ namespace TaskTracker.Controllers
             Session["Email"] = null;
             Session["Id"] = null;
             Session["Role"] = null;
+            Session["ManagerId"] = null;
+            Session["EmployeeId"] = null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }

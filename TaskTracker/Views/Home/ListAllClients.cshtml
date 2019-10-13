@@ -1,9 +1,16 @@
 ﻿
 @model IEnumerable<TaskTracker.Models.ClientVM>
 
-<p>
-    @Html.ActionLink("Register New Client", "RegisterClient")
-</p>
+@if (Session["Role"] != null)
+{
+    if (Session["Role"].ToString() == "admin")
+    {
+        <p>
+            @Html.ActionLink("Register New Client", "RegisterClient", "Account")
+        </p>
+    }
+}
+
 
 
 <table class="table">
@@ -23,22 +30,20 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Country)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Address)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.CompanyName)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "EditTask", new { taskId = item.ClientId })
-        @Html.ActionLink("Delete", "DeleteTask", new { taskId = item.ClientId })
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
 
-    </td>
-</tr>
+            </td>
+        </tr>
     }
 
 </table>

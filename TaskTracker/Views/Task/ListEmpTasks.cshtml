@@ -1,0 +1,69 @@
+﻿@model IEnumerable<TaskTracker.Models.TaskVM>
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClientId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ManagerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfSteps)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskDefinition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsCompleted)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfSteps)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskDefinition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCompleted)
+            </td>
+
+            @if (Session["Role"] != null)
+            {
+                if (Session["Role"].ToString() == "manager" || Session["Role"].ToString() == "employee")
+                {
+                    <td>
+                        @Html.ActionLink("Details", "TaskDetails", new { taskId = item.TaskId })
+                    </td>
+                }
+            }
+
+        </tr>
+    }
+
+</table>

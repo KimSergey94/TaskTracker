@@ -1,0 +1,19 @@
+﻿@model TaskTracker.Models.CommentVM
+
+    <dl class="=" dl-horizontal">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <dt>@Html.DisplayName("Message")</dt>
+            <dd> @Html.EditorFor(model => model.Message)</dd>
+            @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+
+            <dd>
+                <input type="submit" value="Create Comment">
+            </dd>
+        }
+    </dl>

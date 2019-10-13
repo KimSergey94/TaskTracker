@@ -30,7 +30,7 @@ namespace TaskTracker.Controllers
 
         #region Tasks
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "manager")]
         public ActionResult ListAllTasks()
         {
             ViewBag.Title = "All Tasks";
@@ -41,6 +41,25 @@ namespace TaskTracker.Controllers
             return View(tasks);
         }
 
+        [Authorize(Roles = "employee")]
+        public ActionResult ListEmpTasks()
+        {
+            ViewBag.Title = "All Employee Tasks";
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskVM>()).CreateMapper();
+            var dbTasks = orderService.GetTasks();
+            List<TaskVM> tasks = new List<TaskVM>();
+            int employeeId = Convert.ToInt32(Session["EmployeeId"]);
+
+            foreach (TaskDTO task in dbTasks)
+            {
+                if (task.EmployeeId == employeeId)
+                {
+                    tasks.Add(mapper.Map<TaskDTO, TaskVM>(task));
+                }
+            }
+            return View(tasks);
+        }
 
         [Authorize(Roles = "manager, employee")]
         public ActionResult TaskDetails(int taskId)
@@ -95,7 +114,7 @@ namespace TaskTracker.Controllers
 
                     };
                     orderService.AddTask(taskDTO);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ListAllTasks", "Task");
                 }
                 catch (ValidationException ex)
                 {
@@ -106,6 +125,7 @@ namespace TaskTracker.Controllers
             return View();
         }
 
+        [Authorize(Roles = "manager")]
         public ActionResult EditTask(int? taskId)
         {
             TaskDTO taskDTO = orderService.GetTasks().FirstOrDefault(taskID => taskID.TaskId == taskId);
@@ -120,6 +140,7 @@ namespace TaskTracker.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "manager")]
         [HttpPost]
         public ActionResult EditTask(TaskVM taskVM)
         {
@@ -133,10 +154,10 @@ namespace TaskTracker.Controllers
             dbTask.Steps = taskVM.Steps;
 
             orderService.EditTask(dbTask);
-
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ListAllTasks", "Task");
         }
 
+        [Authorize(Roles = "manager")]
         public ActionResult DeleteTask(int taskId)
         {
             var task = orderService.GetTasks().FirstOrDefault(taskID => taskID.TaskId == taskId);
@@ -148,6 +169,8 @@ namespace TaskTracker.Controllers
             var taskVM = mapper.Map<TaskDTO, TaskVM>(task);
             return View(taskVM);
         }
+
+        [Authorize(Roles = "manager")]
         [HttpPost]
         public ActionResult DeleteTask(TaskVM task)
         {
@@ -160,7 +183,7 @@ namespace TaskTracker.Controllers
             }
             else
             {
-                ViewBag.Message = "The task has not been deleted successfully.";
+                ViewBag.Message = "The task has not been deleted successfully. Sorry.";
                 ViewBag.Title = "Deletion error.";
                 return View("Error");
             }
@@ -206,13 +229,6 @@ namespace TaskTracker.Controllers
         [HttpPost]
         public ActionResult CreateStep(StepVM step)
         {
-
-            //if (Session["Role"].ToString() == "manager")
-            //{
-            //    Session["ManagerId"] = orderService.GetManagers().Find(empId => empId.EmployeeId ==
-            //                    (orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId)).ManagerId;
-            //}
-
             if (ModelState.IsValid)
             {
                 try
@@ -229,7 +245,7 @@ namespace TaskTracker.Controllers
                         Message = step.Message,
                     };
                     orderService.AddStep(stepDTO);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ListAllTasks", "Task");
                 }
                 catch (ValidationException ex)
                 {
@@ -239,13 +255,11 @@ namespace TaskTracker.Controllers
             return View();
         }
 
+
+        [Authorize(Roles = "manager, employee")]
         public ActionResult EditStep(int? stepId)
         {
             StepDTO stepDTO = orderService.GetSteps().FirstOrDefault(stepID => stepID.StepId == stepId);
-            //taskDTO = orderService.GetTasksWithIncludedSteps(taskDTO);
-
-            SelectList cmnts = new SelectList(orderService.GetEmployees(), "EmployeeId", "FirstName", 1);
-            ViewBag.Comments = cmnts;
 
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<StepDTO, StepVM>()).CreateMapper();
             var model = mapper.Map<StepDTO, StepVM>(stepDTO);
@@ -253,6 +267,7 @@ namespace TaskTracker.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "manager, employee")]
         [HttpPost]
         public ActionResult EditStep(StepVM stepVM)
         {
@@ -262,13 +277,14 @@ namespace TaskTracker.Controllers
             dbStep.Comments = stepVM.Comments;
 
             orderService.EditStep(dbStep);
-
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ListAllTasks", "Task");
         }
 
+
+        [Authorize(Roles = "manager, employee")]
         public ActionResult DeleteStep(int stepId)
         {
-            var step = orderService.GetSteps().FirstOrDefault(taskID => taskID.TaskId == stepId);
+            var step = orderService.GetSteps().FirstOrDefault(taskID => taskID.StepId == stepId);
             step = orderService.GetStepWithIncludedComments(step);
 
             TempData["Comments"] = new SelectList(step.Comments.ToArray(), "CommentId", "Message", "1");
@@ -277,19 +293,21 @@ namespace TaskTracker.Controllers
             var taskVM = mapper.Map<StepDTO, StepVM>(step);
             return View(taskVM);
         }
-        [HttpPost]
-        public ActionResult DeleteStep(TaskVM task)
-        {
-            var taskDTO = orderService.GetTasks().FirstOrDefault(taskID => taskID.TaskId == task.TaskId);
-            orderService.DeleteTask(taskDTO);
 
-            if (orderService.GetTasks().Exists(x => x.TaskId == task.TaskId) == false)
+        [Authorize(Roles = "manager, employee")]
+        [HttpPost]
+        public ActionResult DeleteStep(StepVM step)
+        {
+            var stepDTO = orderService.GetSteps().FirstOrDefault(taskID => taskID.StepId == step.StepId);
+            orderService.DeleteStep(stepDTO);
+
+            if (orderService.GetSteps().Exists(x => x.StepId == step.StepId) == false)
             {
                 return RedirectToAction("ListAllTasks", "Task");
             }
             else
             {
-                ViewBag.Message = "The task has not been deleted successfully.";
+                ViewBag.Message = "The step has not been deleted successfully. Sorry";
                 ViewBag.Title = "Deletion error.";
                 return View("Error");
             }
@@ -297,6 +315,8 @@ namespace TaskTracker.Controllers
 
         #endregion Steps
 
+
+        #region Comments
 
 
         [Authorize(Roles = "manager, employee")]
@@ -318,9 +338,99 @@ namespace TaskTracker.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "manager, employee")]
+        public ActionResult CreateComment(int stepId)
+        {
+            TempData["StepId"] = stepId;
+            return View();
+        }
+
+        [Authorize(Roles = "manager, employee")]
+        [HttpPost]
+        public ActionResult CreateComment(CommentVM comment)
+        {
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    int stepId = Convert.ToInt32(TempData["StepId"]);
+                    if (stepId == 0 || stepId == null)  // null??
+                    {
+                        return HttpNotFound();
+                    }
+
+                    var commentDTO = new CommentDTO
+                    {
+                        StepId = comment.StepId,
+                        Message = comment.Message,
+                    };
+                    orderService.AddComment(commentDTO);
+                    return RedirectToAction("ListAllTasks", "Task");
+                }
+                catch (ValidationException ex)
+                {
+                    ModelState.AddModelError(ex.Property, ex.Message);
+                }
+            }
+            return View();
+        }
+
+        [Authorize(Roles = "manager, employee")]
+        public ActionResult EditComment(int? commentId)
+        {
+            CommentDTO commentDTO = orderService.GetComments().FirstOrDefault(commentID => commentID.CommentId == commentId);
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CommentDTO, CommentVM>()).CreateMapper();
+            var model = mapper.Map<CommentDTO, CommentVM>(commentDTO);
+
+            return View(model);
+        }
 
 
+        [Authorize(Roles = "manager, employee")]
+        [HttpPost]
+        public ActionResult EditComment(CommentVM commentVM)
+        {
+            var dbComment= orderService.GetComments().FirstOrDefault(x => x.CommentId == commentVM.CommentId);
+            dbComment.Message = commentVM.Message;
 
-        
+            orderService.EditComment(dbComment);
+
+            return RedirectToAction("ListAllTasks", "Task");
+        }
+
+        [Authorize(Roles = "manager, employee")]
+        public ActionResult DeleteComment(int commentId)
+        {
+            var comment = orderService.GetComments().FirstOrDefault(taskID => taskID.CommentId == commentId);
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CommentDTO, CommentVM>()).CreateMapper();
+            var commentVM = mapper.Map<CommentDTO, CommentVM>(comment);
+            return View(commentVM);
+        }
+
+        [Authorize(Roles = "manager, employee")]
+        [HttpPost]
+        public ActionResult DeleteComment(CommentVM comment)
+        {
+            var commentDTO = orderService.GetComments().FirstOrDefault(commentID => commentID.CommentId == comment.CommentId);
+            orderService.DeleteComment(commentDTO);
+
+            if (orderService.GetComments().Exists(x => x.CommentId == comment.CommentId) == false)
+            {
+                return RedirectToAction("ListAllTasks", "Task");
+            }
+            else
+            {
+                ViewBag.Message = "The comment has not been deleted successfully. Sorry";
+                ViewBag.Title = "Deletion error.";
+                return View("Error");
+            }
+        }
+
+        #endregion Comments
+
+
     }
 }

@@ -3,7 +3,7 @@
     ViewBag.Title = "Comment Details";
 }
 
-<h2>Task Details </h2>
+    <h2>Comment Details </h2>
 
 
 <table class="table">
@@ -25,8 +25,21 @@
         <td>
             @Html.DisplayFor(modelItem => modelItem.Message)
         </td>
-        <td>@Html.ActionLink("Delete", "DeleteComment", new { commentId = Model.CommentId })</td>
-    </tr>
+        <td>
+            
+
+            @if (Session["Role"] != null)
+            {
+                if (Session["Role"].ToString() == "manager" || Session["Role"].ToString() == "employee")
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "EditComment", new { commentId = Model.CommentId })
+                        @Html.ActionLink("Delete", "DeleteComment", new { commentId = Model.CommentId })
+                    </td>
+                }
+            }
+            </td>
+        </tr>
 </table>
 
 <p>

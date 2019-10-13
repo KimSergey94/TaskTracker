@@ -27,6 +27,8 @@ namespace DAL_TaskTracker.Repositories
             Comment item = db.Comments.Find(id);
             if (item != null)
                 db.Comments.Remove(item);
+
+            db.SaveChanges();
         }
 
         public List<Comment> Find(Func<Comment, bool> predicate)
@@ -47,6 +49,7 @@ namespace DAL_TaskTracker.Repositories
         public void Update(Comment item)
         {
             db.Entry(item).State = EntityState.Modified;
+            db.SaveChanges();
         }
 
 

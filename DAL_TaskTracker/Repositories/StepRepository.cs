@@ -19,29 +19,31 @@ namespace DAL_TaskTracker.Repositories
         }
         public void Create(Step item)
         {
-            db.Statuses.Add(item);
+            db.Steps.Add(item);
         }
 
         public void Delete(int id)
         {
-            Step item = db.Statuses.Find(id);
+            Step item = db.Steps.Find(id);
             if (item != null)
-                db.Statuses.Remove(item);
+                db.Steps.Remove(item);
+
+            db.SaveChanges();
         }
 
         public List<Step> Find(Func<Step, bool> predicate)
         {
-            return db.Statuses.Where(predicate).ToList();
+            return db.Steps.Where(predicate).ToList();
         }
 
         public Step Get(int id)
         {
-            return db.Statuses.Find(id);
+            return db.Steps.Find(id);
         }
 
         public List<Step> GetAll()
         {
-            return db.Statuses.ToList();
+            return db.Steps.ToList();
         }
 
         public void Update(Step item)

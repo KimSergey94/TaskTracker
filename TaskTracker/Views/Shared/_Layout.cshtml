@@ -18,17 +18,71 @@
                 </button>
                 @Html.ActionLink("TaskTracker", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("List All Clients", "ListAllClients", "Home")</li>
-                    <li>@Html.ActionLink("List All Managers", "ListAllManagers", "Home")</li>
-                    <li>@Html.ActionLink("List All Tasks", "ListAllTasks", "Task")</li>
-                    <li>@Html.ActionLink("Create Task", "CreateTask", "Task")</li>
 
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+            @if (Session["Role"] != null)
+            {
+                if (Session["Role"].ToString() == "manager")
+                {
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("List All Tasks", "ListAllTasks", "Task")</li>
+                            <li>@Html.ActionLink("List All Employees", "ListAllEmployees", "Home")</li>
+                            <li>@Html.ActionLink("List All Clients", "ListAllClients", "Home")</li>
+                            <li>@Html.ActionLink("Hire New Employee", "RegisterEmployee", "Account")</li>
+                            <li>@Html.ActionLink("Create New Task", "CreateTask", "Task")</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                }
+                else if (Session["Role"].ToString() == "employee")
+                {
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("List My Tasks", "ListEmpTasks", "Task")</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                }
+                else if (Session["Role"].ToString() == "admin")
+                {
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("List All Clients", "ListAllClients", "Home")</li>
+                            <li>@Html.ActionLink("List All Employees", "ListAllEmployees", "Home")</li>
+                            <li>@Html.ActionLink("List All Managers", "ListAllManagers", "Home")</li>
+                            <li>@Html.ActionLink("Registration", "Register", "Account")</li>
+
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                }
+                else
+                {
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("About Us", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("About Us", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            }
+
         </div>
+
+    </div>
+
+    </div>
     </div>
     <div class="container body-content">
         @RenderBody()

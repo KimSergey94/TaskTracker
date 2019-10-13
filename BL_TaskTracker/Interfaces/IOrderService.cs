@@ -11,6 +11,11 @@ namespace BLL_TaskTracker.Interfaces
 
         void AddStep(StepDTO stepDTO);
         void EditStep(StepDTO taskDTO);
+        void DeleteStep(StepDTO stepDTO);
+
+        void AddComment(CommentDTO commentDTO);
+        void EditComment(CommentDTO commentDTO);
+        void DeleteComment(CommentDTO commentDTO);
 
         void AddEmployee(EmployeeDTO employeeDTO);
         void AddManager(ManagerDTO ManagerDTO);
@@ -21,7 +26,8 @@ namespace BLL_TaskTracker.Interfaces
 
         string GetUserRoleName(int roleId);
         TaskDTO GetTaskWithIncludedSteps(TaskDTO task);
-        StepDTO GetStepWithIncludedComments(StepDTO step)
+        StepDTO GetStepWithIncludedComments(StepDTO step);
+        List<EmployeeDTO> GetAllManagers();
 
 
 

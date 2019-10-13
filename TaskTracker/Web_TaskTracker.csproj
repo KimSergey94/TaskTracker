@@ -232,6 +232,12 @@
     <Content Include="Views\Task\CreateStep.cshtml" />
     <Content Include="Views\Task\Error.cshtml" />
     <Content Include="Views\Task\DeleteComment.cshtml" />
+    <Content Include="Views\Task\EditStep.cshtml" />
+    <Content Include="Views\Task\DeleteStep.cshtml" />
+    <Content Include="Views\Task\CreateComment.cshtml" />
+    <Content Include="Views\Task\EditComment.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Task\ListEmpTasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
