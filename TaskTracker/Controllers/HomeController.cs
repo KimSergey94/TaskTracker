@@ -23,8 +23,7 @@ namespace TaskTracker.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Title = "Index page";
-
+            ViewBag.Title = "Welcome to our website";
             return View();
         }
 
@@ -79,13 +78,16 @@ namespace TaskTracker.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Title = "Please, feel free to call and send us emails ";
+            ViewBag.Title = "Please, feel free to send us emails.";
+            ViewBag.Message = "We are available at tasktrackers@tastracker.com";
             return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Title = "About Us";
+            ViewBag.Message = "Our web application is available for private users only. Please, contact with representatives " +
+                "of our company to make use of our services.";
             return View();
         }
 

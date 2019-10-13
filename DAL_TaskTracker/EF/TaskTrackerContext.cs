@@ -16,6 +16,7 @@ namespace DAL_TaskTracker.EF
         public DbSet<Step> Steps { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Email> Emails { get; set; }
 
         public static void Initialize()
         {

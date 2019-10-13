@@ -65,15 +65,19 @@
                 {
                     if (Session["Role"].ToString() == "manager" || Session["Role"].ToString() == "employee")
                     {
-                        <td>
-                            @Html.ActionLink("Details ", "TaskDetails", new { taskId = item.TaskId })
-                            @if (Session["Role"].ToString() == "manager")
-                            {
-                                @Html.ActionLink("Edit ", "EditTask", new { taskId = item.TaskId })
-                                @Html.ActionLink("Delete", "DeleteTask", new { taskId = item.TaskId })
-                            }
+            <td>
+                @Html.ActionLink("Details ", "TaskDetails", new { taskId = item.TaskId })
+                @if (Session["Role"].ToString() == "manager")
+                {
+                    @Html.ActionLink("Edit ", "EditTask", new { taskId = item.TaskId })
+                    @Html.ActionLink("Delete  ", "DeleteTask", new { taskId = item.TaskId })
+                }
+                @if (Session["Role"].ToString() == "manager" && item.IsCompleted == true)
+                {
+                    @Html.ActionLink("Inform by mail ", "SendEmail", new { clientId = item.ClientId, managerId = item.ManagerId, taskId = item.TaskId })
+                }
 
-                        </td>
+            </td>
                     }
                 }
 

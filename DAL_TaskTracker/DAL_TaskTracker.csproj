@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="EF\TaskTrackerContext.cs" />
     <Compile Include="Entities\Admin.cs" />
+    <Compile Include="Entities\Email.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\Client.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Repositories\ClientRepository.cs" />
     <Compile Include="Repositories\CommentRepository.cs" />
     <Compile Include="Repositories\EFUnitOfWork.cs" />
+    <Compile Include="Repositories\EmailRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUnitOfWork.cs" />

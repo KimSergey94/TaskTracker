@@ -28,7 +28,7 @@ namespace BLL_TaskTracker.Interfaces
         TaskDTO GetTaskWithIncludedSteps(TaskDTO task);
         StepDTO GetStepWithIncludedComments(StepDTO step);
         List<EmployeeDTO> GetAllManagers();
-
+        void SendEmail(int clientId, int managerId, int taskId);
 
 
 
@@ -44,6 +44,7 @@ namespace BLL_TaskTracker.Interfaces
         List<StepDTO> GetSteps();
         List<CommentDTO> GetComments();
         List<RoleDTO> GetRoles();
+        List<RoleDTO> GetEmails();
         void Dispose();
     }
 }

@@ -4,6 +4,7 @@ using BLL_TaskTracker.Interfaces;
 using DAL_TaskTracker.Entities;
 using DAL_TaskTracker.Repositories.Interfaces;
 using System.Collections.Generic;
+using System.Net.Mail;
 using Task = DAL_TaskTracker.Entities.Task;
 
 namespace BLL_TaskTracker.Services
@@ -79,6 +80,12 @@ namespace BLL_TaskTracker.Services
             return mapper.Map<List<Role>, List<RoleDTO>>(database.Roles.GetAll());
         }
 
+        public List<EmailDTO> GetEmails()
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Email, EmailDTO>()).CreateMapper();
+            return mapper.Map<List<Email>, List<EmailDTO>>(database.Emails.GetAll());
+        }
+
 
 
 
@@ -113,6 +120,22 @@ namespace BLL_TaskTracker.Services
 
             return step;
         }
+
+        public void SendEmail(int clientId, int managerId, int taskId)
+        {
+            Email email = new Email
+            {
+                ClientId = clientId,
+                ManagerId = managerId,
+                TaskId = taskId
+            };
+
+            database.Emails.Create(email);
+            database.Save();
+        }
+
+
+
 
         public List<EmployeeDTO> GetAllManagers()
         {

@@ -14,6 +14,7 @@ namespace DAL_TaskTracker.Repositories.Interfaces
         IRepository<Step> Steps { get; }
         IRepository<Comment> Comments { get; }
         IRepository<Role> Roles { get; }
+        IRepository<Email> Emails { get; }
 
         void Save();
     }

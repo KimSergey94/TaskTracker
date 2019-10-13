@@ -18,6 +18,7 @@ namespace DAL_TaskTracker.Repositories
         private StepRepository stepRepository;
         private CommentRepository commentRepository;
         private RoleRepository roleRepository;
+        private EmailRepository emailRepository;
 
 
         public EFUnitOfWork()
@@ -144,6 +145,16 @@ namespace DAL_TaskTracker.Repositories
             }
         }
 
+        public IRepository<Email> Emails
+        {
+            get
+            {
+                if (emailRepository == null)
+                    emailRepository = new EmailRepository(db);
+                return emailRepository;
+            }
+        }
         
+
     }
 }
