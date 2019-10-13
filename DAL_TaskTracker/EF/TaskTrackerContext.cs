@@ -58,9 +58,9 @@ namespace DAL_TaskTracker.EF
             db.Users.Add(new User { Email = "admin@ad.min", Password = "admin@ad.min", RoleId = 1 });
             db.Admins.Add(new Admin { UserId = 1 });
 
-            db.Managers.Add(new Manager { });
+            db.Managers.Add(new Manager { EmployeeId = 1});
 
-            db.Users.Add(new User { RoleId = 2, Email = "google@google.com", Password = "google.com" });
+            db.Users.Add(new User { RoleId = 2, Email = "manager@test.com", Password = "manager" });
 
             db.Users.Add(new User { RoleId = 3, Email = "test@test.com", Password = "test.com" });
             db.Users.Add(new User { RoleId = 4, Email = "techsupport@accenture.com", Password = "accenture.com" });

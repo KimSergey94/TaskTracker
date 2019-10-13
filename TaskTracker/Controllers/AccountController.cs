@@ -44,6 +44,10 @@ namespace TaskTracker.Controllers
                         Session["ManagerId"] = orderService.GetManagers().Find(empId => empId.EmployeeId ==
                                         (orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId)).ManagerId;
                     }
+                    if (Session["Role"].ToString() == "client")
+                    {
+                        Session["ClientId"] = orderService.GetClients().Find(clientId => clientId.UserId == user.UserId).ClientId;
+                    }
                     if (Session["Role"].ToString() == "employee")
                     {
                         Session["EmployeeId"] = orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId;
@@ -315,6 +319,10 @@ namespace TaskTracker.Controllers
                         Session["Email"] = user.Email;
                         Session["Id"] = user.UserId;
                         Session["Role"] = orderService.GetUserRoleName(user.RoleId);
+                        if (Session["Role"].ToString() == "client")
+                        {
+                            Session["ClientId"] = orderService.GetClients().Find(clientId => clientId.UserId == user.UserId).ClientId;
+                        }
                         FormsAuthentication.SetAuthCookie(model.Email, true);
                         return RedirectToAction("Index", "Home");
                     }
@@ -335,6 +343,8 @@ namespace TaskTracker.Controllers
             Session["Role"] = null;
             Session["ManagerId"] = null;
             Session["EmployeeId"] = null;
+            Session["ClientId"] = null;
+
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }

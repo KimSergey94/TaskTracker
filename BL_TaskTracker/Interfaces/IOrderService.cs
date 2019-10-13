@@ -44,7 +44,7 @@ namespace BLL_TaskTracker.Interfaces
         List<StepDTO> GetSteps();
         List<CommentDTO> GetComments();
         List<RoleDTO> GetRoles();
-        List<RoleDTO> GetEmails();
+        List<EmailDTO> GetEmails();
         void Dispose();
     }
 }

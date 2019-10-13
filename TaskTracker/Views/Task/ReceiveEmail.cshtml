@@ -1,0 +1,38 @@
+﻿@model IEnumerable<TaskTracker.Models.ClientTaskVM>
+
+<h3>Here is the list of all finished tasks as per your request: </h3>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Task Id")
+        </th>
+        <th>
+            @Html.DisplayName("Task Definition")
+        </th>
+        <th>
+            @Html.DisplayName("Manager Name")
+        </th>
+        <th>
+            @Html.DisplayName("Manager Email")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskDefinition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerEmail)
+            </td>
+        </tr>
+    }
+
+</table>

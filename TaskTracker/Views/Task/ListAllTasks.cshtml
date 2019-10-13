@@ -74,7 +74,7 @@
                 }
                 @if (Session["Role"].ToString() == "manager" && item.IsCompleted == true)
                 {
-                    @Html.ActionLink("Inform by mail ", "SendEmail", new { clientId = item.ClientId, managerId = item.ManagerId, taskId = item.TaskId })
+                    @Html.ActionLink("Send mail to client", "SendEmail", new { clientId = item.ClientId, managerId = item.ManagerId, taskId = item.TaskId })
                 }
 
             </td>

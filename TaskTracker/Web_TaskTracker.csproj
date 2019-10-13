@@ -152,7 +152,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Global.asax.cs">
@@ -161,6 +160,7 @@
     <Compile Include="Models\AdminRegisterModel.cs" />
     <Compile Include="Models\AdminVM.cs" />
     <Compile Include="Models\ClientRegisterModel.cs" />
+    <Compile Include="Models\ClientTaskVM.cs" />
     <Compile Include="Models\ClientVM.cs" />
     <Compile Include="Models\CommentVM.cs" />
     <Compile Include="Models\EmailModel.cs" />
@@ -240,7 +240,8 @@
     <Content Include="Views\Task\EditComment.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Task\ListEmpTasks.cshtml" />
-    <Content Include="Views\Email\SendEmail.cshtml" />
+    <Content Include="Views\Task\SendEmail.cshtml" />
+    <Content Include="Views\Task\ReceiveEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

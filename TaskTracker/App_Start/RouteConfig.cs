@@ -18,6 +18,12 @@ namespace TaskTracker
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "clientEmails",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Email", action = "SendEmail", id = UrlParameter.Optional }
+            );
         }
     }
 }
