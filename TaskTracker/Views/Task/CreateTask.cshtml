@@ -1,41 +1,34 @@
 ﻿@model TaskTracker.Models.TaskVM
 
 
-    <dl class="=" dl-horizontal">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    var employees = (IEnumerable<SelectListItem>)TempData["Employees"];
+    var clients = (IEnumerable<SelectListItem>)TempData["Clients"];
+    
+    
+    
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <table class="table", style="border:inset">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.TaskDefinition)</th>
+            <th>@Html.DisplayNameFor(model => model.NumberOfSteps)</th>
+            <th>@Html.DisplayNameFor(model => model.IsCompleted)</th>
+            <th>Pick an employee to whom you want to assign the task:</th>
+            <th>Pick a client that requested the task:</th>
+            <th>Create the task</th>
+        </tr>
+    
+        <tr>
+            <td>@Html.EditorFor(model => model.TaskDefinition)</td>
+            <td>@Html.EditorFor(model => model.NumberOfSteps)</td>
+            <td>@Html.EditorFor(model => model.IsCompleted)</td>
+            <td>@Html.DropDownListFor(m => m.EmployeeId, employees)</td>
+            <td>@Html.DropDownListFor(m => m.ClientId, clients)</td>
+            <td><input type="submit" value="Create Task"></td>
+        </tr>
+    </table>
+}
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-            <dt>@Html.DisplayNameFor(model => model.NumberOfSteps)</dt>
-            <dd> @Html.EditorFor(model => model.NumberOfSteps)</dd>
-            @Html.ValidationMessageFor(model => model.NumberOfSteps, "", new { @class = "text-danger" })
-
-
-            <dt>@Html.DisplayNameFor(model => model.IsCompleted)</dt>
-            <dd> @Html.EditorFor(model => model.IsCompleted)</dd>
-            @Html.ValidationMessageFor(model => model.IsCompleted, "", new { @class = "text-danger" })
-
-            <dt>@Html.DisplayNameFor(model => model.TaskDefinition)</dt>
-            <dd>@Html.EditorFor(model => model.TaskDefinition)</dd>
-            @Html.ValidationMessageFor(model => model.TaskDefinition, "", new { @class = "text-danger" })
-
-
-            var employees = (IEnumerable<SelectListItem>)TempData["Employees"];
-
-            <dt> Pick an employee to whom you want to assign the task:</dt>
-            <dd> @Html.DropDownListFor(m => m.EmployeeId, employees)</dd>
-            @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
-
-            var clients = (IEnumerable<SelectListItem>)TempData["Clients"];
-
-            <dt> Pick a client that requested the task:</dt>
-            <dd> @Html.DropDownListFor(m => m.ClientId, clients)</dd>
-            @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
-
-            <dd>
-                <input type="submit" value="Create Task">
-            </dd>
-        }
-    </dl>

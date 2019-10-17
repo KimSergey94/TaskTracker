@@ -3,7 +3,7 @@
     ViewBag.Title = "Login";
 }
 
-<h2>Login</h2>
+<h2 style="color:midnightblue; border-bottom-style:inset">Login Page</h2>
 
 @using (Html.BeginForm())
 {
@@ -11,7 +11,7 @@
     @Html.ValidationSummary(true) 
 
     <p>
-    @Html.LabelFor(model => model.Email) < br /> 
+    @Html.LabelFor(model => model.Email) <br/> 
     @Html.EditorFor(model => model.Email) 
     @Html.ValidationMessageFor(model => model.Email)
     </p>
@@ -24,7 +24,7 @@
     </p>
 
 <p>
-    <input type="submit" value="Войти"
+    <input type="submit" value="Log In"
            class="btn btn-default" />
 </p>
 }

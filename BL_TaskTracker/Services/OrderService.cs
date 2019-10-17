@@ -134,7 +134,30 @@ namespace BLL_TaskTracker.Services
             database.Save();
         }
 
+        public List<ClientTaskDTO> ReceiveEmails(int clientId)
+        {
+            var emails = database.Emails.Find(x => x.ClientId == clientId);
+            List<ClientTaskDTO> clientTasks = new List<ClientTaskDTO>();
 
+            foreach (Email email in emails)
+            {
+                int man_employeeId = database.Managers.Get(email.ManagerId).EmployeeId;
+                string managerName = database.Employees.Get(man_employeeId).FirstName;
+                int managerUserId = database.Employees.Get(man_employeeId).UserId;
+                string managerEmail = database.Users.Get(managerUserId).Email;
+
+                clientTasks.Add(new ClientTaskDTO
+                {
+                    TaskId = email.TaskId,
+                    TaskDefinition = database.Tasks.Get(email.TaskId).TaskDefinition,
+                    ManagerName = managerName,
+                    ManagerEmail = managerEmail,
+
+                });
+            }
+            return clientTasks;
+        }
+        
 
 
         public List<EmployeeDTO> GetAllManagers()

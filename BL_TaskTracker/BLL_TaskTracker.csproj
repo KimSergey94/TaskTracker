@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="DTO\AdminDTO.cs" />
     <Compile Include="DTO\ClientDTO.cs" />
+    <Compile Include="DTO\ClientTaskDTO.cs" />
     <Compile Include="DTO\CommentDTO.cs" />
     <Compile Include="DTO\EmailDTO.cs" />
     <Compile Include="DTO\EmployeeDTO.cs" />

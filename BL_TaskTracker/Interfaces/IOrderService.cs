@@ -1,4 +1,5 @@
 ﻿using BLL_TaskTracker.DTO;
+using DAL_TaskTracker.Entities;
 using System.Collections.Generic;
 
 namespace BLL_TaskTracker.Interfaces
@@ -29,6 +30,7 @@ namespace BLL_TaskTracker.Interfaces
         StepDTO GetStepWithIncludedComments(StepDTO step);
         List<EmployeeDTO> GetAllManagers();
         void SendEmail(int clientId, int managerId, int taskId);
+        List<ClientTaskDTO> ReceiveEmails(int clientId);
 
 
 

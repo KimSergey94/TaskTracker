@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace TaskTracker.Models
+namespace BLL_TaskTracker.DTO
 {
-    public class ClientTaskVM
+    public class ClientTaskDTO
     {
         [Key]
         [Required(ErrorMessage = "Task Id field is required")]

@@ -75,11 +75,25 @@ namespace TaskTracker.Controllers
                 return HttpNotFound();
             }
             task.Steps = orderService.GetSteps().Where(id => id.TaskId == taskId).ToList();
-            ///////////
+
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskVM>()).CreateMapper();
             var model = mapper.Map<TaskDTO, TaskVM>(task);
 
+            int completedSteps = 0;
+
+            foreach (StepDTO step in model.Steps)
+            {
+                if (step.IsCompleted == true)
+                {
+                    completedSteps += 1;
+                }
+            }
+            model.TaskPercentage = completedSteps * 100 / model.NumberOfSteps;
+            if (model.TaskPercentage > 100)
+                model.TaskPercentage = 100;
+
             return View(model);
+
         }
 
         [Authorize(Roles = "manager")]
@@ -464,26 +478,10 @@ namespace TaskTracker.Controllers
 
                 ViewBag.Title = "Client Finished Tasks";
                 ViewBag.Message = "The email notification has been successfully sent.";
-                var cTasksDb = orderService.GetTasks().Where(clientID => clientID.ClientId == clientId);
-                List<ClientTaskVM> clientTasks = new List<ClientTaskVM>();
 
-                foreach (TaskDTO cTask in cTasksDb)
-                {
-                    int man_employeeId = orderService.GetManagers().FirstOrDefault(managerID => managerID.ManagerId == cTask.ManagerId).EmployeeId;
-                    string managerName = orderService.GetEmployees().FirstOrDefault(x => x.EmployeeId == man_employeeId).FirstName;
-                    int managerUserId = orderService.GetEmployees().FirstOrDefault(x => x.EmployeeId == man_employeeId).UserId;
-                    string managerEmail = orderService.GetUsers().FirstOrDefault(x => x.UserId == managerUserId).Email;
-                    clientTasks.Add(new ClientTaskVM
-                    {
-                        TaskId = cTask.TaskId,
-                        TaskDefinition = cTask.TaskDefinition,
-                        ManagerName = managerName,
-                        ManagerEmail = managerEmail,
+                //var cTasksDb = orderService.GetTasks().Where(clientID => clientID.ClientId == clientId);
 
-                    });
-                }
-
-                return View(clientTasks);
+                return View(orderService.ReceiveEmails(clientId));
             }
             catch
             {
