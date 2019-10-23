@@ -28,17 +28,6 @@ namespace TaskTracker.Controllers
         }
 
 
-        [Authorize(Roles = "admin")]
-        public ActionResult ListAllAdmins()
-        {
-            ViewBag.Title = "All Admins";
-
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<AdminDTO, AdminVM>()).CreateMapper();
-
-            var admins = mapper.Map<List<AdminDTO>, List<AdminVM>>(orderService.GetAdmins());
-            return View(admins);
-        }
-
         [Authorize(Roles = "admin, manager")]
         public ActionResult ListAllClients()
         {

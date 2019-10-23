@@ -23,7 +23,6 @@ namespace TaskTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                // поиск пользователя в бд
                 UserVM user = null;
                 var users = GetUsers();
                 user = users.FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
@@ -32,12 +31,6 @@ namespace TaskTracker.Controllers
                     Session["Email"] = user.Email;
                     Session["Id"] = user.UserId;
                     Session["Role"] = orderService.GetUserRoleName(user.RoleId);
-
-                    //AdminVM admin = new AdminVM();
-                    //ManagerVM manager = new ManagerVM();
-                    //EmployeeVM employee = new EmployeeVM();
-                    //ClientVM client = new ClientVM();
-                    //RoleDTO role = orderService.GetRoles().Where(roleId => roleId.RoleId == Convert.ToInt32(Session["Role"])).FirstOrDefault();
 
                     if (Session["Role"].ToString() == "manager")
                     {

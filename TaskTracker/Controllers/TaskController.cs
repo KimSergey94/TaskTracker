@@ -261,7 +261,18 @@ namespace TaskTracker.Controllers
                         Message = step.Message,
                     };
                     orderService.AddStep(stepDTO);
-                    return RedirectToAction("ListAllTasks", "Task");
+
+                    if (Session["Role"] != null)
+                    {
+                        if (Session["Role"].ToString() == "employee")
+                        {
+                            return RedirectToAction("ListEmpTasks", "Task");
+                        }
+                        else
+                        {
+                            return RedirectToAction("ListAllTasks", "Task");
+                        }
+                    }
                 }
                 catch (ValidationException ex)
                 {
@@ -293,7 +304,24 @@ namespace TaskTracker.Controllers
             dbStep.Comments = stepVM.Comments;
 
             orderService.EditStep(dbStep);
-            return RedirectToAction("ListAllTasks", "Task");
+
+            if (Session["Role"] != null)
+            {
+                if (Session["Role"].ToString() == "employee")
+                {
+                    return RedirectToAction("ListEmpTasks", "Task");
+                }
+                else
+                {
+                    return RedirectToAction("ListAllTasks", "Task");
+                }
+            }
+            else
+            {
+                ViewBag.Message = "The step has not been edited successfully. Sorry";
+                ViewBag.Title = "Edition error.";
+                return View("Error");
+            }
         }
 
 
@@ -317,9 +345,16 @@ namespace TaskTracker.Controllers
             var stepDTO = orderService.GetSteps().FirstOrDefault(taskID => taskID.StepId == step.StepId);
             orderService.DeleteStep(stepDTO);
 
-            if (orderService.GetSteps().Exists(x => x.StepId == step.StepId) == false)
+            if (Session["Role"] != null && orderService.GetSteps().Exists(x => x.StepId == step.StepId) == false)
             {
-                return RedirectToAction("ListAllTasks", "Task");
+                if (Session["Role"].ToString() == "employee")
+                {
+                    return RedirectToAction("ListEmpTasks", "Task");
+                }
+                else
+                {
+                    return RedirectToAction("ListAllTasks", "Task");
+                }
             }
             else
             {
@@ -382,7 +417,18 @@ namespace TaskTracker.Controllers
                         Message = comment.Message,
                     };
                     orderService.AddComment(commentDTO);
-                    return RedirectToAction("ListAllTasks", "Task");
+
+                    if (Session["Role"] != null)
+                    {
+                        if (Session["Role"].ToString() == "employee")
+                        {
+                            return RedirectToAction("ListEmpTasks", "Task");
+                        }
+                        else
+                        {
+                            return RedirectToAction("ListAllTasks", "Task");
+                        }
+                    }
                 }
                 catch (ValidationException ex)
                 {
@@ -413,7 +459,23 @@ namespace TaskTracker.Controllers
 
             orderService.EditComment(dbComment);
 
-            return RedirectToAction("ListAllTasks", "Task");
+            if (Session["Role"] != null)
+            {
+                if (Session["Role"].ToString() == "employee")
+                {
+                    return RedirectToAction("ListEmpTasks", "Task");
+                }
+                else
+                {
+                    return RedirectToAction("ListAllTasks", "Task");
+                }
+            }
+            else
+            {
+                ViewBag.Message = "The step has not been edited successfully. Sorry";
+                ViewBag.Title = "Edition error.";
+                return View("Error");
+            }
         }
 
         [Authorize(Roles = "manager, employee")]
@@ -433,9 +495,16 @@ namespace TaskTracker.Controllers
             var commentDTO = orderService.GetComments().FirstOrDefault(commentID => commentID.CommentId == comment.CommentId);
             orderService.DeleteComment(commentDTO);
 
-            if (orderService.GetComments().Exists(x => x.CommentId == comment.CommentId) == false)
+            if (Session["Role"] != null && orderService.GetComments().Exists(x => x.CommentId == comment.CommentId) == false)
             {
-                return RedirectToAction("ListAllTasks", "Task");
+                if (Session["Role"].ToString() == "employee")
+                {
+                    return RedirectToAction("ListEmpTasks", "Task");
+                }
+                else
+                {
+                    return RedirectToAction("ListAllTasks", "Task");
+                }
             }
             else
             {
@@ -479,9 +548,10 @@ namespace TaskTracker.Controllers
                 ViewBag.Title = "Client Finished Tasks";
                 ViewBag.Message = "The email notification has been successfully sent.";
 
-                //var cTasksDb = orderService.GetTasks().Where(clientID => clientID.ClientId == clientId);
-
-                return View(orderService.ReceiveEmails(clientId));
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientTaskDTO, ClientTaskVM>()).CreateMapper();
+                var clientNotifications = mapper.Map<List<ClientTaskDTO>, List<ClientTaskVM>>(orderService.ReceiveEmails(clientId));
+                
+                return View(clientNotifications);
             }
             catch
             {

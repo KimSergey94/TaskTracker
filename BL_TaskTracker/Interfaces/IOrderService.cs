@@ -33,8 +33,6 @@ namespace BLL_TaskTracker.Interfaces
         List<ClientTaskDTO> ReceiveEmails(int clientId);
 
 
-
-
         List<UserDTO> GetUsers();//
         List<AdminDTO> GetAdmins();//
         List<ClientDTO> GetClients();//

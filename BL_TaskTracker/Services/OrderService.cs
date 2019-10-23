@@ -18,6 +18,39 @@ namespace BLL_TaskTracker.Services
         }
 
         
+        public void AuthorizeUser(UserDTO model)
+        {
+            UserDTO user = null;
+            var users = GetUsers();
+            model = users.Find(u => u.Email == model.Email && u.Password == model.Password);
+            if (user != null)
+            {
+                Session["Email"] = user.Email;
+                Session["Id"] = user.UserId;
+                Session["Role"] = orderService.GetUserRoleName(user.RoleId);
+
+                if (Session["Role"].ToString() == "manager")
+                {
+                    Session["ManagerId"] = orderService.GetManagers().Find(empId => empId.EmployeeId ==
+                                    (orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId)).ManagerId;
+                }
+                if (Session["Role"].ToString() == "client")
+                {
+                    Session["ClientId"] = orderService.GetClients().Find(clientId => clientId.UserId == user.UserId).ClientId;
+                }
+                if (Session["Role"].ToString() == "employee")
+                {
+                    Session["EmployeeId"] = orderService.GetEmployees().Find(x => x.UserId == user.UserId).EmployeeId;
+                }
+                FormsAuthentication.SetAuthCookie(model.Email, true);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Пользователя с таким логином и паролем нет");
+            }
+        }
+
 
 
         public List<UserDTO> GetUsers()

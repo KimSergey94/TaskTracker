@@ -95,5 +95,15 @@
 
 
 <p>
-    @Html.ActionLink("Back to the list of all tasks", "ListAllTasks")
+    @if (Session["Role"] != null)
+    {
+        if (Session["Role"].ToString() == "employee")
+        {
+            @Html.ActionLink("Back to the list of all tasks", "ListEmpTasks")
+        }
+        else
+        {
+            @Html.ActionLink("Back to the list of all tasks", "ListAllTasks")
+        }
+    }
 </p>

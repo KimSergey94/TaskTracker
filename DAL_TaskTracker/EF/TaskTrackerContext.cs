@@ -55,7 +55,7 @@ namespace DAL_TaskTracker.EF
 
             db.Managers.Add(new Manager { EmployeeId = 2 });
             db.Users.Add(new User { RoleId = 2, Email = "bill@manager.com", Password = "test" });
-            db.Users.Add(new User { RoleId = 2, Email = "eashaan@employee.com", Password = "test" });
+            db.Users.Add(new User { RoleId = 3, Email = "eashaan@employee.com", Password = "test" });
 
             db.Employees.Add(new Employee { FirstName = "Edward", LastName = "Johnson", Country = "USA", Position = ".NET Developer", Salary = 60000, UserId = 4 });
             db.Employees.Add(new Employee { FirstName = "Bill", LastName = "White", Country = "USA", Position = "C# Developer", Salary = 55000, UserId = 5 });
@@ -68,7 +68,8 @@ namespace DAL_TaskTracker.EF
             db.Steps.Add(new Step { Message = "Assigning the tasks", IsCompleted = true, TaskId = 1 });
             db.Steps.Add(new Step { Message = "The task is in progress", IsCompleted = false, TaskId = 1 });
 
-            db.Tasks.Add(new Task { IsCompleted = false, EmployeeId = 3, ManagerId = 1, NumberOfSteps = 6, TaskDefinition = "Create Web App" });
+            db.Tasks.Add(new Task { IsCompleted = false, EmployeeId = 3, ClientId = 1, ManagerId = 1, NumberOfSteps = 6, TaskDefinition = "Create Web App" });
+            db.Emails.Add(new Email { ClientId = 1, ManagerId = 2, TaskId = 1 });
 
             db.SaveChanges();
 
